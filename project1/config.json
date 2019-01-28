@@ -1,0 +1,5 @@
+{
+  "pathToTweets": "gg2013.json",
+  "dbCollection": "gg2013",
+  "dbName": "gg-twitter"
+}
