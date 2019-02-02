@@ -21,6 +21,9 @@
 		> retweets: tweets got the most retweets have higher importance?
 
 
+Gabe Ideas:
+- We might get multiple names for an award. We can keep track of the different winners/nominees by award and keep a count for each of the names
+
 
 Minimum requirement questions:
 1. Find host name? 
