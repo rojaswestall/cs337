@@ -65,11 +65,19 @@ for i, doc in enumerate(host_tweets):
         else:
             host_dict[name] = 1
 
-gg = reversed(sorted(host_dict.items(), key=lambda x: x[1]))
+gg = list(reversed(sorted(host_dict.items(), key=lambda x: x[1])))
 
 for i, name in enumerate(gg):
     if i > 5: break
     print(name)
+
+# Check correlation on the first two potential hosts
+# If no correlation return the top result
+# If there is correlation, try again with the third result
+correlation_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year" "'  + gg[0][0] + '" "' + gg[1][0] + '"'}})
+
+#  Now compare this to the number that is returned in gg
+
 
 print("sum of name counts: ", count)
 
