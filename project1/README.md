@@ -37,3 +37,8 @@ Minimum requirement questions:
 4. Nominees, mapped to awards
 
 5. Winnters, mapped to awards
+
+
+
+Resources we used:
+- [nltk libraries and examples](https://towardsdatascience.com/named-entity-recognition-with-nltk-and-spacy-8c4a7d88e7da?fbclid=IwAR0m3EPkwcjTnqWJvxN-HKlGImYFY3X2yi7DjJKe0lHJVKpiYQK6tZidPZY)

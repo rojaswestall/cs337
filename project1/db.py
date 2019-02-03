@@ -5,12 +5,19 @@ from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import conlltags2tree, tree2conlltags
 from pprint import pprint
+# import "./config.json" as config
+import json
 
 # Run bash script for mongo setup ...
 
 client = MongoClient()
 
-db = client['gg-twitter']
+f = open('config.json')
+data = json.load(f)
+collection = data["dbCollection"]
+db = client[data["dbName"]]
+f.close()
+
 
 # FIND ONE ITEM IN THE DB
 # tweets2015 = db['tweets-2015'].find_one({"id": 554403687448469504})
@@ -33,8 +40,8 @@ db = client['gg-twitter']
 def names_from_tweet(tweet):
     ne_tree = nltk.ne_chunk(pos_tag(word_tokenize(tweet['text'])))
     subtrees = filter(lambda x: x.label() == 'PERSON', ne_tree.subtrees())
-
-    lists_of_tuples = [tree.leaves() for tree in subtrees]
+    full_name_trees = filter(lambda x: len(x.leaves()) >= 2, subtrees)
+    lists_of_tuples = [tree.leaves() for tree in full_name_trees]
     def fun(x):
         y = [ t[0] for t in x  ]
         z = ' '.join(y)
@@ -45,20 +52,26 @@ def names_from_tweet(tweet):
 
 
 host_dict = {}
-host_tweets = db['gg2013'].find({ "$text": { "$search": "host hosts"}})
+host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
 
 # tweet = db['gg2013'].find_one({"id": 290634374695763968})
-
-for i, doc in enumerate(host_tweets): 
+count = 0
+for i, doc in enumerate(host_tweets):
     people = names_from_tweet(doc)
     for name in people:
+        count += 1
         if name in host_dict:
             host_dict[name] += 1
         else:
             host_dict[name] = 1
 
-gg = sorted(host_dict.items(), key=lambda x: x[1])
-print(gg)
+gg = reversed(sorted(host_dict.items(), key=lambda x: x[1]))
+
+for i, name in enumerate(gg):
+    if i > 5: break
+    print(name)
+
+print("sum of name counts: ", count)
 
 # def preprocess(phrase):
 #     tokenized = nltk.word_tokenize(phrase)
