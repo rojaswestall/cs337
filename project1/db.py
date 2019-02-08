@@ -5,19 +5,24 @@ from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import conlltags2tree, tree2conlltags
 from pprint import pprint
-# import "./config.json" as config
 import json
 
-# Run bash script for mongo setup ...
+# Before running this, the bash script should be run for whatever year you want to run the script for
+# This bash script will setup mongo for that year
 
+# Connect to the Mongo Client
 client = MongoClient()
 
+# Open the config file and set the correct db and collection
 f = open('config.json')
 data = json.load(f)
 collection = data["dbCollection"]
 db = client[data["dbName"]]
 f.close()
 
+
+
+# RANDOM CODE TO HELP US:
 
 # FIND ONE ITEM IN THE DB
 # tweets2015 = db['tweets-2015'].find_one({"id": 554403687448469504})
@@ -35,8 +40,14 @@ f.close()
 # IN COMPASS filter bar
 # { $text: { $search: 'host'} }
 
-# Keep track of all the proper nouns and return the ones with a certain percentage more than the total number of tweets
 
+
+# Just for ourselves to test:
+categories = ["best drama", "best comedy or musical", "best screenplay", "best director", "best actor in drama", "best actress in drama", "best actor in a comedy or musical", "best actress in a comedy or musical", "best supporting actress", "best supporting actor", "best foreign film", "best animation", "best original score", "best original song", "best television drama", "best actress, TV drama", "best actor, TV drama", "best comedy", "best actress, comedy", "best actor, comedy", "best TV movie or miniseries", "best actress, mini series or musical", "best actor, miniseries of TV movie", "best supporting actress", "best supporting actor", "Cecil B DeMille award"]
+
+host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
+
+# Keep track of all the proper nouns and return the ones with a certain percentage more than the total number of tweets
 def names_from_tweet(tweet):
     ne_tree = nltk.ne_chunk(pos_tag(word_tokenize(tweet['text'])))
     subtrees = filter(lambda x: x.label() == 'PERSON', ne_tree.subtrees())
@@ -50,36 +61,61 @@ def names_from_tweet(tweet):
     people = [ fun(x) for x in lists_of_tuples ]
     return people
 
+def getNamesFromSearch(cursor):
+    name_dict = {}
+    count = 0
+    for i, doc in enumerate(cursor):
+        people = names_from_tweet(doc)
+        for name in people:
+            count += 1
+            if name in name_dict:
+                name_dict[name] += 1
+            else:
+                name_dict[name] = 1
+    return name_dict
 
-host_dict = {}
-host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
+def createCategorySearchString(category):
+    return '"' + category + '"' + ' winner won wins best'
 
-# tweet = db['gg2013'].find_one({"id": 290634374695763968})
-count = 0
-for i, doc in enumerate(host_tweets):
-    people = names_from_tweet(doc)
-    for name in people:
-        count += 1
-        if name in host_dict:
-            host_dict[name] += 1
-        else:
-            host_dict[name] = 1
+def getBestFromDict(dct):
+    return list(reversed(sorted(dct.items(), key=lambda x: x[1])))
 
-gg = list(reversed(sorted(host_dict.items(), key=lambda x: x[1])))
 
+host_dict = getNamesFromSearch(host_tweets)
+
+gg = getBestFromDict(host_dict)
+
+print("hosts results: \n")
 for i, name in enumerate(gg):
     if i > 5: break
     print(name)
+print("\n\n")
+
+for category in categories:
+    tweets = db[collection].find({ "$text": { "$search": createCategorySearchString(category)}})
+    dic = getNamesFromSearch(tweets)
+    best = getBestFromDict(dic)
+    print(category + ": \n")
+    for i, name in enumerate(best):
+        if i > 5: break
+        print(name)
+    print("\n\n")
+
+
+
+
+
+
 
 # Check correlation on the first two potential hosts
 # If no correlation return the top result
 # If there is correlation, try again with the third result
-correlation_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year" "'  + gg[0][0] + '" "' + gg[1][0] + '"'}})
+# correlation_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year" "'  + gg[0][0] + '" "' + gg[1][0] + '"'}})
 
 #  Now compare this to the number that is returned in gg
 
 
-print("sum of name counts: ", count)
+# print("sum of name counts: ", count)
 
 # def preprocess(phrase):
 #     tokenized = nltk.word_tokenize(phrase)
