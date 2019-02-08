@@ -21,6 +21,9 @@
 		> retweets: tweets got the most retweets have higher importance?
 
 
+Gabe Ideas:
+- We might get multiple names for an award. We can keep track of the different winners/nominees by award and keep a count for each of the names
+
 
 Minimum requirement questions:
 1. Find host name? 
@@ -34,3 +37,12 @@ Minimum requirement questions:
 4. Nominees, mapped to awards
 
 5. Winnters, mapped to awards
+
+
+
+Resources we used:
+- [nltk libraries and examples](https://towardsdatascience.com/named-entity-recognition-with-nltk-and-spacy-8c4a7d88e7da?fbclid=IwAR0m3EPkwcjTnqWJvxN-HKlGImYFY3X2yi7DjJKe0lHJVKpiYQK6tZidPZY)
+
+
+Assumptions:
+- 
