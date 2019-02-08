@@ -43,7 +43,8 @@ f.close()
 
 
 # Just for ourselves to test:
-categories = ["best drama", "best comedy or musical", "best screenplay", "best director", "best actor in drama", "best actress in drama", "best actor in a comedy or musical", "best actress in a comedy or musical", "best supporting actress", "best supporting actor", "best foreign film", "best animation", "best original score", "best original song", "best television drama", "best actress, TV drama", "best actor, TV drama", "best comedy", "best actress, comedy", "best actor, comedy", "best TV movie or miniseries", "best actress, mini series or musical", "best actor, miniseries of TV movie", "best supporting actress", "best supporting actor", "Cecil B DeMille award"]
+categories = ["best drama", "best comedy or musical", "best screenplay", "best director", "best actor in a drama", "best actress in drama", "best actor in a comedy or musical", "best actress in a comedy or musical", "best supporting actress", "best supporting actor", "best foreign film", "best animation", "best original score", "best original song", "best television drama", "best actress, TV drama", "best actor, TV drama", "best comedy", "best actress, comedy", "best actor, comedy", "best TV movie or miniseries", "best actress, mini series or musical", "best actor, miniseries of TV movie", "best supporting actress", "best supporting actor", "Cecil B DeMille award"]
+categories_without_best = ["drama", "comedy or musical", "screenplay", "director", "actor in a drama", "actress in drama", "actor in a comedy or musical", "actress in a comedy or musical", "supporting actress", "supporting actor", "foreign film", "animation", "original score", "original song", "television drama", "actress, TV drama", "actor, TV drama", "comedy", "actress, comedy", "actor, comedy", "TV movie or miniseries", "actress, mini series or musical", "actor, miniseries of TV movie", "supporting actress", "supporting actor", "Cecil B DeMille award"]
 
 host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
 
@@ -75,23 +76,21 @@ def getNamesFromSearch(cursor):
     return name_dict
 
 def createCategorySearchString(category):
-    return '"' + category + '"' + ' winner won wins best'
+    return '"' + category + '"' + 'winner won wins best congratulations congrats 🎉 🎊 🏆 🎬 🎤 🎞 📽 🎥'
 
 def getBestFromDict(dct):
     return list(reversed(sorted(dct.items(), key=lambda x: x[1])))
 
 
 host_dict = getNamesFromSearch(host_tweets)
-
 gg = getBestFromDict(host_dict)
-
 print("hosts results: \n")
 for i, name in enumerate(gg):
     if i > 5: break
     print(name)
 print("\n\n")
 
-for category in categories:
+for category in categories_without_best:
     tweets = db[collection].find({ "$text": { "$search": createCategorySearchString(category)}})
     dic = getNamesFromSearch(tweets)
     best = getBestFromDict(dic)
