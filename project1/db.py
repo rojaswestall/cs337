@@ -6,6 +6,8 @@ from nltk.tag import pos_tag
 from nltk.chunk import conlltags2tree, tree2conlltags
 from pprint import pprint
 import json
+import datetime
+import time
 
 # Before running this, the bash script should be run for whatever year you want to run the script for
 # This bash script will setup mongo for that year
@@ -76,29 +78,56 @@ def getNamesFromSearch(cursor):
     return name_dict
 
 def createCategorySearchString(category):
-    return '"' + category + '"' + 'winner won wins best congratulations congrats 🎉 🎊 🏆 🎬 🎤 🎞 📽 🎥'
+    return '"' + category + '"'
+    # + 'win winner won wins best congratulations congrats 🎉 🎊 🏆 🎬 🎤 🎞 📽 🎥'
 
 def getBestFromDict(dct):
     return list(reversed(sorted(dct.items(), key=lambda x: x[1])))
 
+# host_dict = getNamesFromSearch(host_tweets)
+# gg = getBestFromDict(host_dict)
+# print("hosts results: \n")
+# for i, name in enumerate(gg):
+#     if i > 5: break
+#     print(name)
+# print("\n\n")
 
-host_dict = getNamesFromSearch(host_tweets)
-gg = getBestFromDict(host_dict)
-print("hosts results: \n")
-for i, name in enumerate(gg):
-    if i > 5: break
-    print(name)
-print("\n\n")
+# for category in categories_without_best:
+#     tweets = db[collection].find({ "$text": { "$search": createCategorySearchString(category)}})
+#     dic = getNamesFromSearch(tweets)
+#     best = getBestFromDict(dic)
+#     print(category + ": \n")
+#     for i, name in enumerate(best):
+#         if i > 5: break
+#         print(name)
+#     print("\n\n")
 
-for category in categories_without_best:
-    tweets = db[collection].find({ "$text": { "$search": createCategorySearchString(category)}})
-    dic = getNamesFromSearch(tweets)
-    best = getBestFromDict(dic)
-    print(category + ": \n")
-    for i, name in enumerate(best):
-        if i > 5: break
-        print(name)
-    print("\n\n")
+
+def sortByTime(cursor):
+    time_dict = {}
+    for i, tweet in enumerate(cursor):
+        tm = tweet['timestamp_ms']
+        # Only care about the 100 second period so use -6
+        shortened = str(tm)[:-5]
+        if shortened in time_dict:
+            time_dict[shortened] +=1
+        else:
+            time_dict[shortened] = 1
+    return time_dict
+
+
+tweets = db[collection].find({ "$text": { "$search": '"drama"'}})
+dic = sortByTime(tweets)
+for key, value in sorted(dic.items()):
+    epoch = datetime.datetime.fromtimestamp(int(key + "00000")/1000.0)
+    readable = epoch.strftime('%I:%M:%S')
+    print(readable, ": ", value)
+
+
+
+
+
+
 
 
 
