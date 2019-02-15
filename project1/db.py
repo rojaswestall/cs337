@@ -45,8 +45,38 @@ f.close()
 
 
 # Just for ourselves to test:
-categories = ["best drama", "best comedy or musical", "best screenplay", "best director", "best actor in a drama", "best actress in drama", "best actor in a comedy or musical", "best actress in a comedy or musical", "best supporting actress", "best supporting actor", "best foreign film", "best animation", "best original score", "best original song", "best television drama", "best actress, TV drama", "best actor, TV drama", "best comedy", "best actress, comedy", "best actor, comedy", "best TV movie or miniseries", "best actress, mini series or musical", "best actor, miniseries of TV movie", "best supporting actress", "best supporting actor", "Cecil B DeMille award"]
-categories_without_best = ["drama", "comedy or musical", "screenplay", "director", "actor in a drama", "actress in drama", "actor in a comedy or musical", "actress in a comedy or musical", "supporting actress", "supporting actor", "foreign film", "animation", "original score", "original song", "television drama", "actress, TV drama", "actor, TV drama", "comedy", "actress, comedy", "actor, comedy", "TV movie or miniseries", "actress, mini series or musical", "actor, miniseries of TV movie", "supporting actress", "supporting actor", "Cecil B DeMille award"]
+# categories = ["best drama", "best comedy or musical", "best screenplay", "best director", "best actor in a drama", "best actress in drama", "best actor in a comedy or musical", "best actress in a comedy or musical", "best supporting actress", "best supporting actor", "best foreign film", "best animation", "best original score", "best original song", "best television drama", "best actress, TV drama", "best actor, TV drama", "best comedy", "best actress, comedy", "best actor, comedy", "best TV movie or miniseries", "best actress, mini series or musical", "best actor, miniseries of TV movie", "best supporting actress", "best supporting actor", "Cecil B DeMille award"]
+# categories_without_best = ["drama", "comedy or musical", "screenplay", "director", "actor in a drama", "actress in drama", "actor in a comedy or musical", "actress in a comedy or musical", "supporting actress", "supporting actor", "foreign film", "animation", "original score", "original song", "television drama", "actress, TV drama", "actor, TV drama", "comedy", "actress, comedy", "actor, comedy", "TV movie or miniseries", "actress, mini series or musical", "actor, miniseries of TV movie", "supporting actress", "supporting actor", "Cecil B DeMille award"]
+
+##### ACCORDING TO THE TAs #####
+OFFICIAL_AWARDS_1315 = [
+    'cecil b. demille award', 
+    'best motion picture - drama', 
+    'best performance by an actress in a motion picture - drama', 
+    'best performance by an actor in a motion picture - drama', 
+    'best motion picture - comedy or musical', 
+    'best performance by an actress in a motion picture - comedy or musical', 
+    'best performance by an actor in a motion picture - comedy or musical', 
+    'best animated feature film', 
+    'best foreign language film', 
+    'best performance by an actress in a supporting role in a motion picture', 
+    'best performance by an actor in a supporting role in a motion picture', 
+    'best director - motion picture', 
+    'best screenplay - motion picture', 
+    'best original score - motion picture', 
+    'best original song - motion picture', 
+    'best television series - drama', 
+    'best performance by an actress in a television series - drama', 
+    'best performance by an actor in a television series - drama', 
+    'best television series - comedy or musical', 
+    'best performance by an actress in a television series - comedy or musical', 
+    'best performance by an actor in a television series - comedy or musical', 
+    'best mini-series or motion picture made for television', 
+    'best performance by an actress in a mini-series or motion picture made for television', 
+    'best performance by an actor in a mini-series or motion picture made for television', 
+    'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 
+    'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
+
 
 host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
 
@@ -116,9 +146,13 @@ def sortByTime(cursor):
     return time_dict
 
 
-tweets = db[collection].find({ "$text": { "$search": '"drama"'}})
+tweets = db[collection].find({ "$text": { "$search": '"best director - motion picture"'}})
 dic = sortByTime(tweets)
 for key, value in sorted(dic.items()):
     epoch = datetime.datetime.fromtimestamp(int(key + "00000")/1000.0)
     readable = epoch.strftime('%I:%M:%S')
     print(readable, ": ", value)
+
+# Search for tweets in a certain time
+# {timestamp_ms: {$gt: 1358090460000, $lt: 1358090700000}}
+# "JB_hasSWAG"

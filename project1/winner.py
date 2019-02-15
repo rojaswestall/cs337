@@ -10,7 +10,7 @@ BUCKET_SIZE_SEC = 50
 BUCKET_SIZE_MS = BUCKET_SIZE_SEC * 1000
 BUCKETS_IN_INTERVAL = 3
 
-def name(award_name, db_collection, collection_size):
+def name(award_name, db_collection):
   print(award_name)
   query_str = award_to_query(award_name)
   interval = foo(query_str, db_collection)
