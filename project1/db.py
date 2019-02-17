@@ -8,6 +8,7 @@ from pprint import pprint
 import json
 import datetime
 import time
+import re
 
 # Before running this, the bash script should be run for whatever year you want to run the script for
 # This bash script will setup mongo for that year
@@ -78,7 +79,7 @@ OFFICIAL_AWARDS_1315 = [
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
 
 
-host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
+# host_tweets = db[collection].find({ "$text": { "$search": 'host hosts -"next year"'}})
 
 # Keep track of all the proper nouns and return the ones with a certain percentage more than the total number of tweets
 def names_from_tweet(tweet):
@@ -132,27 +133,9 @@ def getBestFromDict(dct):
 #         print(name)
 #     print("\n\n")
 
-
-def sortByTime(cursor):
-    time_dict = {}
-    for i, tweet in enumerate(cursor):
-        tm = tweet['timestamp_ms']
-        # Only care about the 100 second period so use -6
-        shortened = str(tm)[:-5]
-        if shortened in time_dict:
-            time_dict[shortened] +=1
-        else:
-            time_dict[shortened] = 1
-    return time_dict
+def does_contain(words, word):
 
 
-tweets = db[collection].find({ "$text": { "$search": '"best director - motion picture"'}})
-dic = sortByTime(tweets)
-for key, value in sorted(dic.items()):
-    epoch = datetime.datetime.fromtimestamp(int(key + "00000")/1000.0)
-    readable = epoch.strftime('%I:%M:%S')
-    print(readable, ": ", value)
-
-# Search for tweets in a certain time
-# {timestamp_ms: {$gt: 1358090460000, $lt: 1358090700000}}
-# "JB_hasSWAG"
+for i, result in enumerate(top_results):
+    for j in range(0,i):
+        result[0]
