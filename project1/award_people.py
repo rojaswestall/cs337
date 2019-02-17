@@ -47,12 +47,16 @@ def find_nominees(peak, db_collection, nlp):
   pass
 
 def find_presenters(peak, db_collection, nlp):
-  return []
-  pass
+  interval = get_relevant_interval(peak, 2, 0)
+  tweets = relevant_tweets(interval, 'presents presenters introduces intros introducing announce announcing announcers ' , db_collection)
+  corpus = utils.corpify_tweets(tweets)
+  entities = utils.get_people(corpus, nlp)
+  winner = utils.choose_best_entities(entities, 1)[0]
+  return winner
 
 def get_relevant_interval(peak, negative_width, positive_width):
   interval = [ 
-    peak+(negative_width*BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS),
+    peak-(negative_width*BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS),
     peak+(positive_width*BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS), 
     ]
   return interval
