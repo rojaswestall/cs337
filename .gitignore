@@ -1,6 +1,6 @@
 project1/gg2015.json
 project1/gg2013.json
 
+__pycache__/*
 
-
-__pycache__/
+*.pyc
