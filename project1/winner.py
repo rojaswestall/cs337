@@ -1,16 +1,11 @@
 import spacy
 import pymongo
-# from spacy import displacy
 from collections import Counter
 import math
 import re
 import json
 import atexit
-import nltk
-from nltk.corpus import stopwords
 
-
-import logging
 from stanfordcorenlp import StanfordCoreNLP
 nlp = spacy.load('en')
 
@@ -20,12 +15,14 @@ BUCKET_SIZE_SEC = 50
 BUCKET_SIZE_MS = BUCKET_SIZE_SEC * 1000
 BUCKETS_IN_INTERVAL = 3
 
-def name(award_name, db_collection, collection_size):
+def name(award_name, db_collection):
   print(award_name)
   query_str = award_to_query(award_name)
   interval = award_interval(query_str, db_collection)
+  print('interval', interval)
   if not interval: return ''
-  relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt': interval[0], '$lt':interval[1] }, '$text': { '$search': 'win won congratulations congrats' }} ).limit(800).sort('timestamp_ms', 1)
+  relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt': interval[0], '$lt':interval[1] }, '$text': { '$search': 'win won congratulations congrats' }} ).limit(1000).sort('timestamp_ms', 1)
+  
   # relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt':interval[0] }, '$text': { '$search': query_str }} ).limit(200).sort('timestamp_ms', 1)
   # relevant_tweets = db_collection.find({ '$text': { '$search': query_str }} )
   
@@ -33,15 +30,16 @@ def name(award_name, db_collection, collection_size):
   tweets_text = ' '.join([ tweet['text'] for tweet in relevant_tweets ])
   clean_text = clean_tweet(tweets_text)
   documents = splitCount(clean_text, 10000)
-  category = choose_category(award_name)
-  top_entity = entities(documents, category, db_collection, collection_size)
+  is_person = is_person_award(award_name)
+  top_entity = entities(documents, is_person)
+
   winner = top_entity[0] if top_entity else ''
+
   print('winner', winner, '\n')
   return winner
 
-def splitCount(s, count):
-  return [''.join(x) for x in zip(*[list(s[z::count]) for z in range(count)])]
-
+def splitCount(paragraph, x):
+  return [paragraph[i: i + x] for i in range(0, len(paragraph), x)]
 
 def award_interval(query_str, db_collection):
   tweets = db_collection.find({ "$text": { "$search": query_str } })
@@ -53,9 +51,6 @@ def award_interval(query_str, db_collection):
   interval = [peak, peak+(BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS) ]
   return interval
 
-def getBestFromList(lst):
-    return list(reversed(sorted(lst, key=lambda x: x[1])))
-
 def query(search_str, db_collection):
     return db_collection.find({ "$text": { "$search": search_str }})
 
@@ -66,40 +61,31 @@ def double_quotes(search_str):
 def count_query(search_str, db_collection):
     return db_collection.count_documents({ "$text": { "$search": search_str }})
 
-def tf_idf(entity, db_collection, collection_size):
-    df = count_query(entity[0], db_collection)
-    idf = math.log10(collection_size / df)
-    return entity[0], entity[1]*idf
+# def tf_idf(entity, db_collection):
+#     df = count_query(entity[0], db_collection)
+#     idf = math.log10(collection_size / df)
+#     return entity[0], entity[1]*idf
 
-def works_of_art(tweet, entity_type):
-  if entity_type != 'PERSON':
+def works_of_art(tweet, is_person):
+  if not is_person:
     return spacify(tweet)
-  entities = nlpStan.ner(tweet)
-  # for pos in poss: print(pos)
-  # no_os = [ (name.lower(),t) for name, t in poss if t != 'O' ]
-  # les_mis = [ (name, t) for name, t in no_os if 'brave' in name ] 
 
-  # for e in les_mis: print(e)
-  named_entities = combine_names(entities, entity_type) if entity_type == 'PERSON' else non_people(entities)
+  entities = nlpStan.ner(tweet)
+  named_entities = combine_names(entities, 'PERSON') 
 
   return named_entities
 
 def spacify(tweet):
   poss = nlpStan.pos_tag(tweet)
   return combine_names(poss, 'NNP')
-  # return [token[0] for token in poss if token[1] == 'NNP']
-
-def non_people(entities):
-  things = [ name for name, ent_type in entities if ent_type != 'PERSON' and ent_type != 'O' ]
-  return things
 
 def combine_names(entities, entity_type):
+
   new_entities = []
 
   for i, entity in enumerate(entities):
     current_type = entity[1]    
     current_name = entity[0]
-    # print(entities)
     if current_type != entity_type:
       continue
 
@@ -112,26 +98,16 @@ def combine_names(entities, entity_type):
 
   return new_entities
 
-def choose_category(award_name):
+def is_person_award(award_name):
   people_words = ['actress','actor', 'director']
-  if any([ word in award_name for word in people_words ]):
-    return 'PERSON'
-  else:
-    return 'ORGANIZATION'
+  return any([ word in award_name for word in people_words ])
 
-def entities(documents, category, db_collection, collection_size):
-  arts = [ works_of_art(tweets_text, category) for tweets_text in documents ]
+def entities(documents, is_person):
+  arts = [ works_of_art(tweets_text, is_person) for tweets_text in documents ]
   flat_arts = flatten(arts)
   lowered = [ entity.lower() for entity in flat_arts ] 
   c = Counter(lowered)
 
-  # if category == 'WORK_OF_ART':
-  #   top_entities = c.most_common(10)
-  #   print(top_entities)
-  #   idf_entities = [ tf_idf(entity, db_collection, collection_size) for entity in top_entities ]
-  #   return max(idf_entities, key=lambda x: x[1]) if idf_entities else None
-  
-  # else:
   top_entities = c.most_common(1)
   print(c.most_common(10))
   return top_entities[0] if top_entities else None   
@@ -141,7 +117,6 @@ def flatten(lst):
 
 DEAD_WORDS = [ 'performance', 'best', 'role', 'made', 'television']
 def award_to_query(award_name):
-  # re.sub(r'television','tv', award_name, flags=re.IGNORECASE)
   document = nlp(award_name)
   
   arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
@@ -156,61 +131,7 @@ def clean_tweet(tweet):
   tweet = re.sub(r'\bRT\b', '', tweet)
   return tweet
 
-# Connect to the Mongo Client
-# client = pymongo.MongoClient()
-
-# Open the config file and set the correct db and collection
-
-# f = open('config.json')
-# data = json.load(f)
-# collection = data["dbCollection"]
-# db = client[data["dbName"]]
-# f.close()
-
-# COLLECTION_SIZE = db[collection].count_documents({})
-
-# print(award_to_query('best performance by an actress in a television series - comedy or musical'))
-b = [
-# 'cecil b. demille award',
-#  'best motion picture - drama',
-#  'best performance by an actress in a motion picture - drama',
-#  'best performance by an actor in a motion picture - drama',
-#  'best motion picture - comedy or musical',
-#  'best performance by an actress in a motion picture - comedy or musical',
-#  'best performance by an actor in a motion picture - comedy or musical',
- 'best animated feature film',
- 'best foreign language film',
-#  'best performance by an actress in a supporting role in a motion picture',
-#  'best performance by an actor in a supporting role in a motion picture',
-#  'best director - motion picture',
- 'best screenplay - motion picture',
- 'best original score - motion picture',
- 'best original song - motion picture',
- 'best television series - drama',
-#  'best performance by an actress in a television series - drama',
-#  'best performance by an actor in a television series - drama',
- 'best television series - comedy or musical',
-#  'best performance by an actress in a television series - comedy or musical',
-#  'best performance by an actor in a television series - comedy or musical',
- 'best mini-series or motion picture made for television',
-#  'best performance by an actress in a mini-series or motion picture made for television',
-#  'best performance by an actor in a mini-series or motion picture made for television',
-#  'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television',
-#  'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television',
- ]
-
 def exit_handler():
   nlpStan.close()
 
 atexit.register(exit_handler)
-# asd = clean_tweet('RT @RobstenLovex: RT @ROBsessedBlog: Awwwww RT @RPattzgirl: Awwww  RT @epnebelle: And a real smile on Rob #GoldenGlobes http://t.co/JXatOwdJ')
-# print(asd)
-# for award in b:
-#   name(award, db[collection], COLLECTION_SIZE)
-# a = [ award_to_query(award) for award in b]
-# for c in a: print(c)
-# d = nlpStan.ner("#GoldenGlobes for best picture to Argo over Lincoln! C'mon Argo is a good movie but Lincoln is awesome!! #ripoff #Argo")
-# print(d)
-
-
-

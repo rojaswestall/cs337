@@ -55,7 +55,7 @@ def get_winner(year):
     # Your code here
     winners = {}
     if year == '2013':
-        winners = [ winner.name(award, db[collection], COLLECTION_SIZE) for award in OFFICIAL_AWARDS_1315 ]
+        winners = [ winner.name(award, db[collection]) for award in OFFICIAL_AWARDS_1315 ]
         tuples = zip(OFFICIAL_AWARDS_1315, winners)
         winners = dict(tuples)
         # yo = winner.name('best motion picture - drama', db[collection], COLLECTION_SIZE)
