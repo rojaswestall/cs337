@@ -25,6 +25,14 @@ def collection(year):
     c = CONFIG["dbCollections"][year]
     return db[c]
 
+def read_answers(year, key):
+    try:
+        with open(CONFIG['pathToAnswers']) as f:
+            winners = json.load(f)[year][key]
+            return winners
+    except:
+        return { award: '' for award in OFFICIAL_AWARDS_1315 }
+
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
@@ -44,26 +52,21 @@ def get_nominees(year):
     names as keys, and each entry a list of strings. Do NOT change
     the name of this function or what it returns.'''
     # Your code here
-    nominees = {}
-    return nominees
+    return read_answers(year, 'nominees')
 
 def get_winner(year):
     '''Winners is a dictionary with the hard coded award
     names as keys, and each entry containing a single string.
     Do NOT change the name of this function or what it returns.'''
     # Your code here
-    winners = [ award_people.process_award(award, collection(year), nlp)[0] for award in OFFICIAL_AWARDS_1315 ]
-    tuples = zip(OFFICIAL_AWARDS_1315, winners)
-    winners = dict(tuples)
-    return winners
+    return read_answers(year, 'winners')
 
 def get_presenters(year):
     '''Presenters is a dictionary with the hard coded award
     names as keys, and each entry a list of strings. Do NOT change the
     name of this function or what it returns.'''
     # Your code here
-    presenters = {}
-    return presenters
+    return read_answers(year, 'presenters')
 
 def pre_ceremony():
     '''This function loads/fetches/processes any data your program
@@ -92,6 +95,23 @@ def main():
     run when grading. Do NOT change the name of this function or
     what it returns.'''
     # Your code here
+    # years = ['2013','2015','2018','2019']
+    years = ['2013']
+    
+    yearly_results = { year: 
+            { award: award_people.process_award(award, collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
+        for year in years }
+
+    answers = { year: {
+        'winners': { award: result[0] for award, result in results.items() },
+        'nominees': { award: result[1] for award, result in results.items() },
+        'presenters': { award: result[2] for award, result in results.items() },
+    } for year, results in yearly_results.items() }
+
+    json_str = json.dumps(answers)
+    with open(CONFIG['pathToAnswers'], 'w+') as f:
+        f.write(json_str)
+
     return
 
 def exit_handler():
