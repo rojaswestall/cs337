@@ -11,6 +11,7 @@ client = MongoClient()
 f = open('config.json')
 data = json.load(f)
 collection = data["dbCollection"]
+print(collection)
 db = client[data["dbName"]]
 f.close()
 

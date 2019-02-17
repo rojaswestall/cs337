@@ -6,6 +6,9 @@ import math
 import re
 import json
 import atexit
+import nltk
+from nltk.corpus import stopwords
+
 
 import logging
 from stanfordcorenlp import StanfordCoreNLP
@@ -22,7 +25,7 @@ def name(award_name, db_collection, collection_size):
   query_str = award_to_query(award_name)
   interval = award_interval(query_str, db_collection)
   if not interval: return ''
-  relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt':interval[0], '$lt':interval[1] }, '$text': { '$search': 'win won congratulations congrats' }} ).limit(1000).sort('timestamp_ms', 1)
+  relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt': interval[0], '$lt':interval[1] }, '$text': { '$search': 'win won congratulations congrats' }} ).limit(800).sort('timestamp_ms', 1)
   # relevant_tweets = db_collection.find({ 'timestamp_ms': { '$gt':interval[0] }, '$text': { '$search': query_str }} ).limit(200).sort('timestamp_ms', 1)
   # relevant_tweets = db_collection.find({ '$text': { '$search': query_str }} )
   
@@ -42,7 +45,7 @@ def splitCount(s, count):
 
 def award_interval(query_str, db_collection):
   tweets = db_collection.find({ "$text": { "$search": query_str } })
-  buckets = [ tweet['timestamp_ms'] // BUCKET_SIZE_MS for tweet in tweets ]
+  buckets = [ int(tweet['timestamp_ms']) // BUCKET_SIZE_MS for tweet in tweets ]
   if not buckets: return None
   c = Counter(buckets)
   peak = c.most_common(1) 
@@ -69,15 +72,22 @@ def tf_idf(entity, db_collection, collection_size):
     return entity[0], entity[1]*idf
 
 def works_of_art(tweet, entity_type):
-  # print('poop', type(tweet))
+  if entity_type != 'PERSON':
+    return spacify(tweet)
   entities = nlpStan.ner(tweet)
-  # no_os = [ (name.lower(),t) for name, t in entities if t != 'O' ]
-  # les_mis = [ (name, t) for name, t in no_os if 'les' in name or 'mis' in name ] 
+  # for pos in poss: print(pos)
+  # no_os = [ (name.lower(),t) for name, t in poss if t != 'O' ]
+  # les_mis = [ (name, t) for name, t in no_os if 'brave' in name ] 
 
   # for e in les_mis: print(e)
-  named_entities = combine_names(entities, entity_type) # if category == 'PERSON' else non_people(entities)
+  named_entities = combine_names(entities, entity_type) if entity_type == 'PERSON' else non_people(entities)
 
   return named_entities
+
+def spacify(tweet):
+  poss = nlpStan.pos_tag(tweet)
+  return combine_names(poss, 'NNP')
+  # return [token[0] for token in poss if token[1] == 'NNP']
 
 def non_people(entities):
   things = [ name for name, ent_type in entities if ent_type != 'PERSON' and ent_type != 'O' ]
@@ -112,7 +122,8 @@ def choose_category(award_name):
 def entities(documents, category, db_collection, collection_size):
   arts = [ works_of_art(tweets_text, category) for tweets_text in documents ]
   flat_arts = flatten(arts)
-  c = Counter(flat_arts)
+  lowered = [ entity.lower() for entity in flat_arts ] 
+  c = Counter(lowered)
 
   # if category == 'WORK_OF_ART':
   #   top_entities = c.most_common(10)
@@ -122,7 +133,7 @@ def entities(documents, category, db_collection, collection_size):
   
   # else:
   top_entities = c.most_common(1)
-  print(c.most_common(5))
+  print(c.most_common(10))
   return top_entities[0] if top_entities else None   
 
 def flatten(lst):
@@ -130,6 +141,7 @@ def flatten(lst):
 
 DEAD_WORDS = [ 'performance', 'best', 'role', 'made', 'television']
 def award_to_query(award_name):
+  # re.sub(r'television','tv', award_name, flags=re.IGNORECASE)
   document = nlp(award_name)
   
   arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
@@ -144,44 +156,43 @@ def clean_tweet(tweet):
   tweet = re.sub(r'\bRT\b', '', tweet)
   return tweet
 
-
 # Connect to the Mongo Client
-client = pymongo.MongoClient()
+# client = pymongo.MongoClient()
 
 # Open the config file and set the correct db and collection
 
-f = open('config.json')
-data = json.load(f)
-collection = data["dbCollection"]
-db = client[data["dbName"]]
-f.close()
+# f = open('config.json')
+# data = json.load(f)
+# collection = data["dbCollection"]
+# db = client[data["dbName"]]
+# f.close()
 
-COLLECTION_SIZE = db[collection].count_documents({})
+# COLLECTION_SIZE = db[collection].count_documents({})
 
 # print(award_to_query('best performance by an actress in a television series - comedy or musical'))
 b = [
 # 'cecil b. demille award',
 #  'best motion picture - drama',
- 'best performance by an actress in a motion picture - drama',
+#  'best performance by an actress in a motion picture - drama',
 #  'best performance by an actor in a motion picture - drama',
- 'best motion picture - comedy or musical',
+#  'best motion picture - comedy or musical',
 #  'best performance by an actress in a motion picture - comedy or musical',
 #  'best performance by an actor in a motion picture - comedy or musical',
-#  'best animated feature film',
-#  'best foreign language film',
+ 'best animated feature film',
+ 'best foreign language film',
 #  'best performance by an actress in a supporting role in a motion picture',
 #  'best performance by an actor in a supporting role in a motion picture',
 #  'best director - motion picture',
-#  'best screenplay - motion picture',
-#  'best original score - motion picture',
-#  'best original song - motion picture',
-#  'best television series - drama',
+ 'best screenplay - motion picture',
+ 'best original score - motion picture',
+ 'best original song - motion picture',
+ 'best television series - drama',
 #  'best performance by an actress in a television series - drama',
 #  'best performance by an actor in a television series - drama',
-#  'best television series - comedy or musical',
+ 'best television series - comedy or musical',
 #  'best performance by an actress in a television series - comedy or musical',
 #  'best performance by an actor in a television series - comedy or musical',
-#  'best mini-series or motion picture made for television',
+ 'best mini-series or motion picture made for television',
 #  'best performance by an actress in a mini-series or motion picture made for television',
 #  'best performance by an actor in a mini-series or motion picture made for television',
 #  'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television',
