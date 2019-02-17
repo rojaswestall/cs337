@@ -1,5 +1,11 @@
 {
-  "pathToTweets": "gg2013.json",
-  "dbCollection": "gg2013",
+  "pathToTweets": {
+    "2013": "gg2013.json",
+    "2015": "gg2015.json"
+  },
+  "dbCollections": {
+    "2013": "gg2013",
+    "2015": "gg2015"
+  },
   "dbName": "gg-twitter"
 }
