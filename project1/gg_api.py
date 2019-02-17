@@ -1,5 +1,5 @@
 '''Version 0.35'''
-import winner
+import award_people
 import host
 import json
 import pymongo
@@ -51,12 +51,12 @@ def get_winner(year):
     Do NOT change the name of this function or what it returns.'''
     # Your code here
     winners = {}
-    if year == '2013':
-        winners = [ winner.name(award, db[collection]) for award in OFFICIAL_AWARDS_1315 ]
-        tuples = zip(OFFICIAL_AWARDS_1315, winners)
-        winners = dict(tuples)
-    else:
-        winners = dict.fromkeys(OFFICIAL_AWARDS_1315, 'a')
+    # if year == '2013':
+    winners = [ award_people.process_award(award, db[collection], nlp)[0] for award in OFFICIAL_AWARDS_1315 ]
+    tuples = zip(OFFICIAL_AWARDS_1315, winners)
+    winners = dict(tuples)
+    # else:
+    #     winners = dict.fromkeys(OFFICIAL_AWARDS_1315, 'a')
     return winners
 
 def get_presenters(year):
