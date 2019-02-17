@@ -9,7 +9,7 @@ BUCKET_SIZE_SEC = 50
 BUCKET_SIZE_MS = BUCKET_SIZE_SEC * 1000
 BUCKETS_IN_INTERVAL = 3
 
-RELEVANT_TWEETS_LIMIT = 800
+RELEVANT_TWEETS_LIMIT = 100
 
 def process_award(award_name, db_collection, nlp):
   print(award_name)

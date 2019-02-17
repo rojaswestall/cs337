@@ -7,5 +7,6 @@
     "2013": "gg2013",
     "2015": "gg2015"
   },
-  "dbName": "gg-twitter"
+  "dbName": "gg-twitter",
+  "pathToAnswers": "answers.json"
 }
