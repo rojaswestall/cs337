@@ -107,6 +107,14 @@ def entities(documents, is_person):
   flat_arts = flatten(arts)
   lowered = [ entity.lower() for entity in flat_arts ] 
   c = Counter(lowered)
+  name_count_pairs = list(c.items())
+
+  for i, entity in enumerate(name_count_pairs):
+    key = entity[0]
+    count = entity[1]
+    for key2, count2 in name_count_pairs[i+1:]:
+      if key2 in key and count > count2:
+        c[key] += count2
 
   top_entities = c.most_common(1)
   print(c.most_common(10))
