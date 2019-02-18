@@ -33,7 +33,7 @@ nlp = StanfordCoreNLP('http://localhost', port=9000)
 #award_search_keywords = "congratulations congrats cong win receive introduce announce pronounce best award"
 
 #award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award - "Golden Globes"'}})
-award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award'}})
+award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award'}}).limit(1000)
 tweet_raw_text = [tweet['text'] for tweet in award_tweets]
 
 
@@ -73,18 +73,19 @@ def chunk_tweet(tweet_tokens):
     tweet_pos_tags = nltk.pos_tag(tweet_tokens)
     # chunking part: should be having three different chunkers
     # case 1: type of award named after an individual
-        # e.g. jeff gabe dp award
-    chunkGram = r"""CONSEC_NOUNS: {<NN>{2,}}"""  
+        # e.g. firstName middleName lastName award
+    chunkGram1 = r"""Chunk: {<NN>{2,4}}"""  
     # case 2: type of award starts with adjective, followed by multiple nouns, and ends by a noun
-#    chunkGram1 = r""" """
-#    # case 3: type of award starts with adjective, 
-#    chunkGram = r"""Chunk: {<JJS.?>*<JJ.?>*<VBD.?>*<CC.?>*<NN.?>*<VBN>}"""
-    chunkParser = nltk.RegexpParser(chunkGram)
+    chunkGram2 = r"""Chunk: {<JJS>{1}.*<NN>{2,}.*<NN>{1}}"""
+    # case 3: type of award starts with adjective, 
+    chunkGram3 = r"""Chunk: {<JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1}}"""
+    chunkParser = nltk.RegexpParser(chunkGram1)
     chunked = chunkParser.parse(tweet_pos_tags)
+    a = []
     for subtree in chunked.subtrees(filter=lambda t: t.label() == 'Chunk'):
-        print(subtree)
+        a.append(subtree)
 
-    return chunked
+    return a
 
 
 
