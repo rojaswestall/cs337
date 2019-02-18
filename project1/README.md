@@ -2,39 +2,32 @@
 
 Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping
 
-- Install python 3.7 (they might use 3.6)
-- Install mongodb (follow their instructions)
-- run `mongod` in one terminal
-- Open another terminal and run setup.sh to make db with data. Make sure gg2013.json and gg2015.json are in the project1 folder in order to make the mongodb
-- `setup.sh` calls mongo sript
-- mongo script imports data and creates index
+## What to Install
+#### MongoDB
+Instructions for downloading and installing MongoDB can be found [here](https://docs.mongodb.com/manual/installation/).
 
+#### Stanford CoreNLP
+Download version 3.9.1 of the [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/history.html) library. The version is important so we can use a python wrapper with it. The latest version of the Stanford CoreNLP library is 3.9.2 so the python wrapper is very up to date regardless.
 
+To use the Stanford CoreNLP library with Python:
+`pip install stanfordcorenlp`
 
-1. Build a MongoDB to facilitate data analysis
-2. How to get a full list of awards, artists, and films.
-3. Data cleaning
-	- Assign tweets into different blocks and check each block separately to test reliability?
-	- Data cleaning: identify and label important tweets for each question as it is unfeasible to process 2M tweets so better narrow it down and find relevant and important tweets to tackle each question.
-		> @mention: keep specific @mention while removing everything else
-		> url: remove all
-		> emoji: keep specific emojis (trophies, peace)
-		> length: discard tweets below certain length after removing all unnecessary contents
-		> retweets: tweets got the most retweets have higher importance?
+#### Spacy
+To install Spacy, simply run `python3 -m spacy download en`
 
+#### NTLK
+To install NLTK, run `sudo pip install -U nltk`. You may be prompted for an administrator's password to complete this installation step. 
 
+## How to run our project
+In order to get this project to run, you'll need Stanford CoreNLP, NLTK, MongoDB, and Spacy installed. After you've installed those technologies, you can do the following to run our project:
 
-
-
+- Run `mongod` in one terminal
+- In a second terminal, start the Stanford CoreNLP Server by `cd`ing into the Stanford CoreNLP directory (which you should have downloaded) earlier and running `java -mx4g -cp "*" --add-modules java.se.ee edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000`
+- In a third terminal window, call `python gg_api.py` to run our main function.
 
 ## Resources used and Papers referenced
-<<<<<<< HEAD
 #### Papers
-This paper uses Twitter data to predict the box office revenue with the assumption that movies that are well talked about are well watched. So we borrowed and modified their assumptions that  “artists who are well talked about are more likely to win”. This paper also introduces us to start thinking about how to relate tweets associated with time. 
-=======
-##### Papers
 This paper uses Twitter data to predict the box office revenue with the assumption that movies that are well talked about are well watched. So we borrowed and modified their assumptions that  “artists who are well talked about are more likely to win”. This paper also introduces us to start thinking about how to relate tweets associated with time.
->>>>>>> adding in best and worst dressed files, still need tto move them to gg
 [Asur, S., & Huberman, B. A. (2010, August). Predicting the future with social media. In Proceedings of the 2010 IEEE/WIC/ACM International Conference on Web Intelligence and Intelligent Agent Technology-Volume 01 (pp. 492-499). IEEE Computer Society.](https://arxiv.org/pdf/1003.5699.pdf)
 
 Leskovec et al. shows the temporal dynamics of the most popular topics in social media are indeed made up of a succession of rising and falling patterns of popularity, in other words, successive bursts of popularity.
@@ -55,23 +48,3 @@ This paper shows the performance of standard NLP tools is severely degraded on t
 - [PyMongo Documentation](https://api.mongodb.com/python/current/) for mongo with python
 - [MongoDB Documentation](https://docs.mongodb.com/manual/tutorial/query-documents/) mostly for use with compass
 - Stack Overflow for genral python help
-
-
-
-## What to Install
-#### MongoDB
-
-#### Stanford CoreNLP
-Download version 3.9.1 of the [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/history.html) library. The version is important so we can use a python wrapper with it. The latest version of the Stanford CoreNLP library is 3.9.2 so the python wrapper is very up to date regardless.
-
-To use the Stanford CoreNLP library with Python :
-```
-pip install stanfordcorenlp
-```
-
-To start the Stanford CoreNLP Server:
-```
-java -mx4g -cp "*" --add-modules java.se.ee edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000
-```
-
-## How to run our project
