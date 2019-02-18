@@ -6,12 +6,15 @@ import pymongo
 import atexit
 from stanfordcorenlp import StanfordCoreNLP
 import re
+import utils
+import pprint
 
 import pandas as pd
 import numpy as np
 import scipy
 import nltk
 from nltk.corpus import stopwords
+from collections import Counter
 
 
 # Connect to the Mongo Client
@@ -33,7 +36,7 @@ nlp = StanfordCoreNLP('http://localhost', port=9000)
 #award_search_keywords = "congratulations congrats cong win receive introduce announce pronounce best award"
 
 #award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award - "Golden Globes"'}})
-award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award'}}).limit(1000)
+award_tweets = db['gg2013'].find({"$text" : {"$search" : 'best award'}}).limit(5000)
 tweet_raw_text = [tweet['text'] for tweet in award_tweets]
 
 
@@ -66,7 +69,7 @@ def normalize_tweet(tweet):
     tweet_normalized_text = [word for word in tweet_tokens if word not in stop_words_GG]
 
     return tweet_normalized_text
-    
+
 
 def chunk_tweet(tweet_tokens):
     # pos tagging tweet tokens
@@ -74,24 +77,39 @@ def chunk_tweet(tweet_tokens):
     # chunking part: should be having three different chunkers
     # case 1: type of award named after an individual
         # e.g. firstName middleName lastName award
-    chunkGram1 = r"""Chunk: {<NN>{2,4}}"""  
+    chunkGram1 = r"""Chunk: {<NN>{4}}"""  
     # case 2: type of award starts with adjective, followed by multiple nouns, and ends by a noun
-    chunkGram2 = r"""Chunk: {<JJS>{1}.*<NN>{2,}.*<NN>{1}}"""
+    chunkGram2 = r"""Chunk: {<JJS>{1}<JJ>?.*<NN>{2}.*<JJ>?<CC>?<NN>{1}}"""
     # case 3: type of award starts with adjective, 
     chunkGram3 = r"""Chunk: {<JJS>{1}<NN>{1}.*<IN>{1}<DT>{1}.*<NN>{2,}.*<NN>{1}}"""
-    chunkParser = nltk.RegexpParser(chunkGram1)
-    chunked = chunkParser.parse(tweet_pos_tags)
-    a = []
-    for subtree in chunked.subtrees(filter=lambda t: t.label() == 'Chunk'):
-        a.append(subtree)
+    
+    matches = get_phrases_from_chunks(chunkGram1, tweet_pos_tags) + get_phrases_from_chunks(chunkGram2, tweet_pos_tags) + get_phrases_from_chunks(chunkGram3, tweet_pos_tags)
 
-    return a
+    if matches == []:
+        return None
+    return matches
+
+def get_phrases_from_chunks(chunk_gram, tweet_pos):
+    chunkParser = nltk.RegexpParser(chunk_gram)
+    chunked = chunkParser.parse(tweet_pos)
+    matches = []
+    for subtree in chunked.subtrees(filter=lambda t: t.label() == 'Chunk'):
+        leaves_words = [ leaf[0] for leaf in subtree.leaves() ]
+        phrase = ' '.join(leaves_words)
+        matches.append(phrase)
+
+    return matches
 
 
 
 # extract all text
 tweet_normalized_text = [normalize_tweet(raw_tweet) for raw_tweet in tweet_raw_text]
-tweet_chunks = [chunk_tweet(tweet_tokens) for tweet_tokens in tweet_normalized_text]
+tweet_chunks = [chunk_tweet(tweet_tokens) for tweet_tokens in tweet_normalized_text if chunk_tweet(tweet_tokens) is not None]
+pprint.pprint(utils.flatten(tweet_chunks))
+
+c = Counter(utils.flatten(tweet_chunks))
+top20 = c.most_common(20)
+print(top20)
 
 
 awards_short_1819 = [
