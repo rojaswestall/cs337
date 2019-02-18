@@ -3,6 +3,7 @@ from collections import Counter
 import utils
 from nltk.tokenize import word_tokenize
 
+from utils import safe_run_process_award
 
 BUCKET_SIZE_SEC = 50
 BUCKET_SIZE_MS = BUCKET_SIZE_SEC * 1000
@@ -10,10 +11,11 @@ BUCKETS_IN_INTERVAL = 3
 
 RELEVANT_TWEETS_LIMIT = 800
 
+@safe_run_process_award
 def process_award(award_name, hosts, db_collection, nlp):
   print('\n\n', award_name.upper())
   peak_timestamp = find_peak_activity(award_name, db_collection)
-  if not peak_timestamp: return '' , '', ''
+  if not peak_timestamp: return '' , [], []
 
   print('\nwinner')
   winner = find_winner(award_name, peak_timestamp, db_collection, nlp)
@@ -31,7 +33,7 @@ def process_award(award_name, hosts, db_collection, nlp):
 
 def find_peak_activity(award_name, db_collection):
   query_str = utils.award_to_query(award_name)
-  print('qp',query_str)
+  # print('qp',query_str)
   tweets = db_collection.find({ "$text": { "$search": query_str } })
   buckets = [ int(tweet['timestamp_ms']) // BUCKET_SIZE_MS for tweet in tweets ]
   if not buckets: return None
@@ -88,11 +90,15 @@ def get_relevant_interval(peak, negative_width, positive_width):
   return interval
 
 def relevant_tweets(interval, query_str, db_collection):
+  timestamp_value = db_collection.find({}).limit(1)[0]['timestamp_ms']
+  gt = str(interval[0]) if type(timestamp_value) == str else interval[0]
+  lt = str(interval[1]) if type(timestamp_value) == str else interval[1]
+  
   return db_collection.find(
-    { 'timestamp_ms': {
-      '$gt': interval[0],
-      '$lt': interval[1] },
-    '$text': { '$search': query_str }}
+    { 'timestamp_ms': { 
+      '$gt': gt, 
+      '$lt': lt }, 
+    '$text': { '$search': query_str }} 
   ).limit(RELEVANT_TWEETS_LIMIT).sort('timestamp_ms', pymongo.ASCENDING)
 
 def get_proper_nouns(corpus, nlp):

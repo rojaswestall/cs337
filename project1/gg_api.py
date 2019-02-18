@@ -7,6 +7,7 @@ import json
 from pymongo import MongoClient
 import atexit
 from stanfordcorenlp import StanfordCoreNLP
+import award_names
 
 # Connect to the Mongo Client
 client = MongoClient()
@@ -36,6 +37,12 @@ def read_answers(year, key):
     except:
         return { award: '' for award in OFFICIAL_AWARDS_1315 }
 
+def award_list(year):
+    if year == '2013' or year == '2015':
+        return OFFICIAL_AWARDS_1315
+    elif year == '2018' or year == '2019':
+        return OFFICIAL_AWARDS_1819
+
 def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
@@ -47,7 +54,7 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    awards = []
+    awards = award_names.award_names(collection(year), nlp)
     return awards
 
 def get_nominees(year):
@@ -98,13 +105,16 @@ def main():
     run when grading. Do NOT change the name of this function or
     what it returns.'''
     # Your code here
-    # years = ['2013','2015','2018','2019']
-    years = ['2013']
+    years = ['2013','2015','2018','2019']
+    # years = ['2019']
 
+    # print('poop')
     hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
 
-    yearly_results = { year:
-            {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
+    # print('hello')
+    # hosts = { '2013': ["tina fey", "amy poehler"] }   
+    yearly_results = { year: 
+            {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in award_list(year) }
         for year in years }
 
     answers = { year: {
@@ -115,10 +125,13 @@ def main():
     } for year, results in yearly_results.items() }
 
     json_str = json.dumps(answers)
+
     with open(CONFIG['pathToAnswers'], 'w+') as f:
         f.write(json_str)
 
     return
+
+
 
 def exit_handler():
     nlp.close()

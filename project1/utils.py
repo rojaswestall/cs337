@@ -7,6 +7,34 @@ nlp_spacy = spacy.load('en')
 
 DOCUMENT_SIZE = 10000
 
+def safe_run_hosts(func):
+
+  def func_wrapper(*args, **kwargs):
+
+    try:
+      return func(*args, **kwargs)
+
+    except Exception as e:
+
+      print(e)
+      return []
+
+  return func_wrapper
+
+def safe_run_process_award(func):
+   
+  def func_wrapper(*args, **kwargs):
+
+    try:
+      return func(*args, **kwargs)
+
+    except Exception as e:
+
+      print(e)
+      return '', [], [] # winner, nominees, presenter
+
+  return func_wrapper
+
 # Combine entities of the same type that are right next to each other in text
 # This lets us get full names and movies/shows with multiple names
 # entities is a list of tuples of (string, type-of-entity)
@@ -84,54 +112,22 @@ def people_from_document(doc, nlp):
   people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON')
   return people
 
-# return n most common entities
-def choose_n_best_entities(entities, n):
-  c = Counter(entities)
-  name_count_pairs = list(c.items())
-
-  for i, entity in enumerate(name_count_pairs):
-    key = entity[0]
-    count = entity[1]
-    for key2, count2 in name_count_pairs[i+1:]:
-      if key2 in key and count > count2:
-        c[key] += count2
-
-  # To visualize results
-  top10 = c.most_common(10)
-  a = [ n + ' ' + str(c) for n,c in top10 ]
-  print(' '.join(a))
-
-  top_entities = c.most_common(n)
-
-  return [ name for name, _count in top_entities[:n] ] if top_entities else []
-
   # return n most common entities
 def choose_best_entities(entities, n):
   c = Counter(entities)
-  name_count_pairs = list(c.items())
 
-  for i, entity in enumerate(name_count_pairs):
-    key = entity[0]
-    count = entity[1]
-    for key2, count2 in name_count_pairs[i+1:]:
-      if key2 in key and count > count2:
-        c[key] += count2
-
-  top10 = c.most_common(10)
-  a = [ n + ' ' + str(c) for n,c in top10 ]
-  print(' '.join(a))
+  c = boost_full_names(c)
 
   top_entities = c.most_common(n)
-
+  # top10 = c.most_common(10)
+  # a = [ n + ' ' + str(c) for n,c in top10 ]
+  # print(' '.join(a))
   # if not is_person:
   #   top_entities = [(name, count) for name, count in top10 if not is_person_entity(name, db_collection, nlp) ]
     
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
-THRESHOLD = .1
-
-def choose_entities_over_threshold(entities):
-  c = Counter(entities)
+def boost_full_names(c):
   name_count_pairs = list(c.items())
 
   for i, entity in enumerate(name_count_pairs):
@@ -140,13 +136,19 @@ def choose_entities_over_threshold(entities):
     for key2, count2 in name_count_pairs:
       if key == key2:
         continue
-
       if key2 in key and count > count2:
         c[key] += count2
+  return c
+
+THRESHOLD = .1
+
+def choose_entities_over_threshold(entities):
+  c = Counter(entities)
+  c = boost_full_names(c)
 
   top10 = c.most_common(10)
-  a = [ n + ' ' + str(c) for n,c in top10 ]
-  print(' '.join(a))
+  # a = [ n + ' ' + str(c) for n,c in top10 ]
+  # print(' '.join(a))
       
   top_entities = entities_over_threshold(top10, len(entities), THRESHOLD)
 
