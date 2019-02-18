@@ -9,6 +9,12 @@ import json
 import datetime
 import time
 import re
+import utils
+
+from stanfordcorenlp import StanfordCoreNLP
+
+# Open the Stanford CoreNLP Pipeline
+nlp = StanfordCoreNLP('http://localhost', port=9000)
 
 # Before running this, the bash script should be run for whatever year you want to run the script for
 # This bash script will setup mongo for that year
@@ -19,7 +25,7 @@ client = MongoClient()
 # Open the config file and set the correct db and collection
 f = open('config.json')
 data = json.load(f)
-collection = data["dbCollection"]
+collection = data["dbCollections"]["2013"]
 db = client[data["dbName"]]
 f.close()
 
@@ -133,9 +139,11 @@ def getBestFromDict(dct):
 #         print(name)
 #     print("\n\n")
 
-def does_contain(words, word):
-
-
-for i, result in enumerate(top_results):
-    for j in range(0,i):
-        result[0]
+sample1 = "It really does freak me out how much my dad looks like Robert Downey Jr. Thanks golden globes for weirdly reminding me http://t.co/AQy3n00f"
+tweets = [{ "text": sample}]
+corpus = utils.corpify_tweets(tweets)
+entities = utils.get_people(corpus, nlp)
+# print('Part of Speech:', nlp.pos_tag(sample))
+# print('Named Entities:', nlp.ner(sample))
+print(entities)
+nlp.close()

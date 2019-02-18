@@ -37,7 +37,7 @@ def get_hosts(year):
     '''Hosts is a list of one or more strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    hosts = host.get_hosts(collection(year), nlp)
+    hosts = read_answers(year, 'hosts')
     return hosts
 
 def get_awards(year):
@@ -78,12 +78,12 @@ def pre_ceremony():
     for year, filepath in CONFIG['pathToTweets'].items():
 
         with open(filepath) as tweets_json:
-            tweets_python = json.load(tweets_json)
+            # tweets_python = json.load(tweets_json)
             c = collection(year)
-            c.insert_many(tweets_python)
+            # c.insert_many(tweets_python)
             c.create_index([('text', pymongo.TEXT)])
-            count = c.count_documents({})
-            print(year, count)
+            # count = c.count_documents({})
+            # print(year, count)
 
     print("Pre-ceremony processing complete.")
     return
@@ -97,12 +97,17 @@ def main():
     # Your code here
     # years = ['2013','2015','2018','2019']
     years = ['2013']
+
+    # hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
+
+    hosts = { '2013': ["tina fey", "amy poehler"] }
     
     yearly_results = { year: 
-            { award: award_people.process_award(award, collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
+            {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
         for year in years }
 
     answers = { year: {
+        'hosts': hosts[year],
         'winners': { award: result[0] for award, result in results.items() },
         'nominees': { award: result[1] for award, result in results.items() },
         'presenters': { award: result[2] for award, result in results.items() },

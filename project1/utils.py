@@ -55,7 +55,8 @@ def get_people(corpus, nlp):
 def get_entities(corpus, nlp, entity_recognizer):
   pos = [ entity_recognizer(doc, nlp) for doc in corpus ]
   p_nouns = flatten(pos)
-  return p_nouns
+  lowered = [ noun.lower() for noun in p_nouns ]
+  return lowered
 
 # return PERSON entities from doc
 def people_from_document(doc, nlp):
@@ -64,9 +65,29 @@ def people_from_document(doc, nlp):
   return people
 
 # return n most common entities
-def choose_best_entities(entities, n):
-  lowered = [ entity.lower() for entity in entities ] 
-  c = Counter(lowered)
+def choose_n_best_entities(entities, n):
+  c = Counter(entities)
+  name_count_pairs = list(c.items())
+
+  for i, entity in enumerate(name_count_pairs):
+    key = entity[0]
+    count = entity[1]
+    for key2, count2 in name_count_pairs[i+1:]:
+      if key2 in key and count > count2:
+        c[key] += count2
+
+  # To visualize results
+  top10 = c.most_common(10)
+  a = [ n + ' ' + str(c) for n,c in top10 ]
+  print(' '.join(a))
+  
+  top_entities = c.most_common(n)
+  
+  return [ name for name, _count in top_entities[:n] ] if top_entities else []
+
+  # return n most common entities
+def choose_best_entities(entities, threshold):
+  c = Counter(entities)
   name_count_pairs = list(c.items())
 
   for i, entity in enumerate(name_count_pairs):
@@ -91,9 +112,13 @@ def choose_best_entities(entities, n):
 #   idf = math.log10(collection_size / df)
 #   return entity[0], entity[1]*idf
 
-# def double_quotes(search_str):
-#   arr = search_str.split()
-#   return ' '.join([ '"' + s + '"' for s in arr ])
+def double_quotes(search_str):
+  arr = search_str.split()
+  return ' '.join([ '"' + s + '"' for s in arr ])
+
+def minus(search_str):
+  arr = search_str.split()
+  return ' '.join([ '-' + s for s in arr ])
 
 # import datetime
 # Useful functions we use to find when the awards were awarded
