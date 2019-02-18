@@ -15,7 +15,7 @@ def get_names_and_combine_adjacent_entities(entities, entity_type):
   new_entities = []
 
   for i, entity in enumerate(entities):
-    current_type = entity[1]    
+    current_type = entity[1]
     current_name = entity[0]
     if current_type != entity_type:
       continue
@@ -58,7 +58,7 @@ def split_count(paragraph, x):
 
 # Flatten a list of sublists to be just a list
 def flatten(lst):
-  return [item for sublist in lst for item in sublist] 
+  return [item for sublist in lst for item in sublist]
 
 # return corpus ready for nlp from list of tweets
 def corpify_tweets(tweets):
@@ -66,12 +66,12 @@ def corpify_tweets(tweets):
   clean_text = clean_tweet(tweets_text)
   corpus = split_count(clean_text, DOCUMENT_SIZE)
   return corpus
-  
+
 # return PERSON entities from corpus
 def get_people(corpus, nlp):
   return get_entities(corpus, nlp, people_from_document)
 
-# return entities recognized by entity_recognizer from corpus 
+# return entities recognized by entity_recognizer from corpus
 def get_entities(corpus, nlp, entity_recognizer):
   pos = [ entity_recognizer(doc, nlp) for doc in corpus ]
   p_nouns = flatten(pos)
@@ -81,7 +81,7 @@ def get_entities(corpus, nlp, entity_recognizer):
 # return PERSON entities from doc
 def people_from_document(doc, nlp):
   named_entities = nlp.ner(doc)
-  people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON') 
+  people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON')
   return people
 
 # return n most common entities
@@ -100,9 +100,9 @@ def choose_n_best_entities(entities, n):
   top10 = c.most_common(10)
   a = [ n + ' ' + str(c) for n,c in top10 ]
   print(' '.join(a))
-  
+
   top_entities = c.most_common(n)
-  
+
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
   # return n most common entities

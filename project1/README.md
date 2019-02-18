@@ -1,6 +1,6 @@
 # Project 1 - Twitter
 
-Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping 
+Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping
 
 - Install python 3.7 (they might use 3.6)
 - Install mongodb (follow their instructions)
@@ -17,7 +17,7 @@ Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping
 	- Assign tweets into different blocks and check each block separately to test reliability?
 	- Data cleaning: identify and label important tweets for each question as it is unfeasible to process 2M tweets so better narrow it down and find relevant and important tweets to tackle each question.
 		> @mention: keep specific @mention while removing everything else
-		> url: remove all 
+		> url: remove all
 		> emoji: keep specific emojis (trophies, peace)
 		> length: discard tweets below certain length after removing all unnecessary contents
 		> retweets: tweets got the most retweets have higher importance?
@@ -28,8 +28,13 @@ Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping
 
 
 ## Resources used and Papers referenced
+<<<<<<< HEAD
 #### Papers
 This paper uses Twitter data to predict the box office revenue with the assumption that movies that are well talked about are well watched. So we borrowed and modified their assumptions that  “artists who are well talked about are more likely to win”. This paper also introduces us to start thinking about how to relate tweets associated with time. 
+=======
+##### Papers
+This paper uses Twitter data to predict the box office revenue with the assumption that movies that are well talked about are well watched. So we borrowed and modified their assumptions that  “artists who are well talked about are more likely to win”. This paper also introduces us to start thinking about how to relate tweets associated with time.
+>>>>>>> adding in best and worst dressed files, still need tto move them to gg
 [Asur, S., & Huberman, B. A. (2010, August). Predicting the future with social media. In Proceedings of the 2010 IEEE/WIC/ACM International Conference on Web Intelligence and Intelligent Agent Technology-Volume 01 (pp. 492-499). IEEE Computer Society.](https://arxiv.org/pdf/1003.5699.pdf)
 
 Leskovec et al. shows the temporal dynamics of the most popular topics in social media are indeed made up of a succession of rising and falling patterns of popularity, in other words, successive bursts of popularity.
@@ -70,5 +75,3 @@ java -mx4g -cp "*" --add-modules java.se.ee edu.stanford.nlp.pipeline.StanfordCo
 ```
 
 ## How to run our project
-
-
