@@ -1,18 +1,21 @@
 '''Version 0.35'''
 import award_people
 import host
+import bestdressed
+import worstdressed
 import json
-import pymongo
+from pymongo import MongoClient
 import atexit
 from stanfordcorenlp import StanfordCoreNLP
 
 # Connect to the Mongo Client
-client = pymongo.MongoClient()
+client = MongoClient()
 
 # Open the config file and set the correct db and collection
 f = open('config.json')
-CONFIG = json.load(f)
-db = client[CONFIG["dbName"]]
+data = json.load(f)
+collection = data["dbCollections"]["2013"]
+db = client[data["dbName"]]
 f.close()
 
 # Open the Stanford CoreNLP Pipeline
@@ -22,12 +25,12 @@ OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama',
 OFFICIAL_AWARDS_1819 = ['best motion picture - drama', 'best motion picture - musical or comedy', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best performance by an actress in a motion picture - musical or comedy', 'best performance by an actor in a motion picture - musical or comedy', 'best performance by an actress in a supporting role in any motion picture', 'best performance by an actor in a supporting role in any motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best motion picture - animated', 'best motion picture - foreign language', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best television series - musical or comedy', 'best television limited series or motion picture made for television', 'best performance by an actress in a limited series or a motion picture made for television', 'best performance by an actor in a limited series or a motion picture made for television', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best performance by an actress in a television series - musical or comedy', 'best performance by an actor in a television series - musical or comedy', 'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 'cecil b. demille award']
 
 def collection(year):
-    c = CONFIG["dbCollections"][year]
+    c = data["dbCollections"][year]
     return db[c]
 
 def read_answers(year, key):
     try:
-        with open(CONFIG['pathToAnswers']) as f:
+        with open(data['pathToAnswers']) as f:
             winners = json.load(f)[year][key]
             return winners
     except:
@@ -78,12 +81,12 @@ def pre_ceremony():
     for year, filepath in CONFIG['pathToTweets'].items():
 
         with open(filepath) as tweets_json:
-            tweets_python = json.load(tweets_json)
+            # tweets_python = json.load(tweets_json)
             c = collection(year)
-            c.insert_many(tweets_python)
+            # c.insert_many(tweets_python)
             c.create_index([('text', pymongo.TEXT)])
-            count = c.count_documents({})
-            print(year, count)
+            # count = c.count_documents({})
+            # print(year, count)
 
     print("Pre-ceremony processing complete.")
     return
@@ -98,11 +101,9 @@ def main():
     # years = ['2013','2015','2018','2019']
     years = ['2013']
 
-    # hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
+    hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
 
-    hosts = { '2013': ["tina fey", "amy poehler"] }
-    
-    yearly_results = { year: 
+    yearly_results = { year:
             {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
         for year in years }
 

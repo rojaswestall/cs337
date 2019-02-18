@@ -16,6 +16,8 @@ from stanfordcorenlp import StanfordCoreNLP
 # Open the Stanford CoreNLP Pipeline
 nlp = StanfordCoreNLP('http://localhost', port=9000)
 
+nltk.download('punkt')
+
 # Before running this, the bash script should be run for whatever year you want to run the script for
 # This bash script will setup mongo for that year
 
@@ -28,8 +30,6 @@ data = json.load(f)
 collection = data["dbCollections"]["2013"]
 db = client[data["dbName"]]
 f.close()
-
-
 
 # RANDOM CODE TO HELP US:
 
@@ -57,31 +57,31 @@ f.close()
 
 ##### ACCORDING TO THE TAs #####
 OFFICIAL_AWARDS_1315 = [
-    'cecil b. demille award', 
-    'best motion picture - drama', 
-    'best performance by an actress in a motion picture - drama', 
-    'best performance by an actor in a motion picture - drama', 
-    'best motion picture - comedy or musical', 
-    'best performance by an actress in a motion picture - comedy or musical', 
-    'best performance by an actor in a motion picture - comedy or musical', 
-    'best animated feature film', 
-    'best foreign language film', 
-    'best performance by an actress in a supporting role in a motion picture', 
-    'best performance by an actor in a supporting role in a motion picture', 
-    'best director - motion picture', 
-    'best screenplay - motion picture', 
-    'best original score - motion picture', 
-    'best original song - motion picture', 
-    'best television series - drama', 
-    'best performance by an actress in a television series - drama', 
-    'best performance by an actor in a television series - drama', 
-    'best television series - comedy or musical', 
-    'best performance by an actress in a television series - comedy or musical', 
-    'best performance by an actor in a television series - comedy or musical', 
-    'best mini-series or motion picture made for television', 
-    'best performance by an actress in a mini-series or motion picture made for television', 
-    'best performance by an actor in a mini-series or motion picture made for television', 
-    'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television', 
+    'cecil b. demille award',
+    'best motion picture - drama',
+    'best performance by an actress in a motion picture - drama',
+    'best performance by an actor in a motion picture - drama',
+    'best motion picture - comedy or musical',
+    'best performance by an actress in a motion picture - comedy or musical',
+    'best performance by an actor in a motion picture - comedy or musical',
+    'best animated feature film',
+    'best foreign language film',
+    'best performance by an actress in a supporting role in a motion picture',
+    'best performance by an actor in a supporting role in a motion picture',
+    'best director - motion picture',
+    'best screenplay - motion picture',
+    'best original score - motion picture',
+    'best original song - motion picture',
+    'best television series - drama',
+    'best performance by an actress in a television series - drama',
+    'best performance by an actor in a television series - drama',
+    'best television series - comedy or musical',
+    'best performance by an actress in a television series - comedy or musical',
+    'best performance by an actor in a television series - comedy or musical',
+    'best mini-series or motion picture made for television',
+    'best performance by an actress in a mini-series or motion picture made for television',
+    'best performance by an actor in a mini-series or motion picture made for television',
+    'best performance by an actress in a supporting role in a series, mini-series or motion picture made for television',
     'best performance by an actor in a supporting role in a series, mini-series or motion picture made for television']
 
 
@@ -116,7 +116,7 @@ def getNamesFromSearch(cursor):
 
 def createCategorySearchString(category):
     return '"' + category + '"'
-    # + 'win winner won wins best congratulations congrats 🎉 🎊 🏆 🎬 🎤 🎞 📽 🎥'
+    # + 'win winner won wins best congratulations congrats
 
 def getBestFromDict(dct):
     return list(reversed(sorted(dct.items(), key=lambda x: x[1])))
