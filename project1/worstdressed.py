@@ -32,4 +32,4 @@ def exit_handler():
 
 atexit.register(exit_handler)
 
-get_worst_dressed(db['gg2013'], nlp)
+# get_worst_dressed(db['gg2013'], nlp)

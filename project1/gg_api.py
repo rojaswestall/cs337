@@ -1,10 +1,12 @@
 '''Version 0.35'''
 import award_people
+import award_names
 import host
 import bestdressed
 import worstdressed
 import json
 from pymongo import MongoClient
+import pymongo
 import atexit
 from stanfordcorenlp import StanfordCoreNLP
 import award_names
@@ -14,9 +16,8 @@ client = MongoClient()
 
 # Open the config file and set the correct db and collection
 f = open('config.json')
-data = json.load(f)
-collection = data["dbCollections"]["2013"]
-db = client[data["dbName"]]
+CONFIG = json.load(f)
+db = client[CONFIG["dbName"]]
 f.close()
 
 # Open the Stanford CoreNLP Pipeline
@@ -26,12 +27,12 @@ OFFICIAL_AWARDS_1315 = ['cecil b. demille award', 'best motion picture - drama',
 OFFICIAL_AWARDS_1819 = ['best motion picture - drama', 'best motion picture - musical or comedy', 'best performance by an actress in a motion picture - drama', 'best performance by an actor in a motion picture - drama', 'best performance by an actress in a motion picture - musical or comedy', 'best performance by an actor in a motion picture - musical or comedy', 'best performance by an actress in a supporting role in any motion picture', 'best performance by an actor in a supporting role in any motion picture', 'best director - motion picture', 'best screenplay - motion picture', 'best motion picture - animated', 'best motion picture - foreign language', 'best original score - motion picture', 'best original song - motion picture', 'best television series - drama', 'best television series - musical or comedy', 'best television limited series or motion picture made for television', 'best performance by an actress in a limited series or a motion picture made for television', 'best performance by an actor in a limited series or a motion picture made for television', 'best performance by an actress in a television series - drama', 'best performance by an actor in a television series - drama', 'best performance by an actress in a television series - musical or comedy', 'best performance by an actor in a television series - musical or comedy', 'best performance by an actress in a supporting role in a series, limited series or motion picture made for television', 'best performance by an actor in a supporting role in a series, limited series or motion picture made for television', 'cecil b. demille award']
 
 def collection(year):
-    c = data["dbCollections"][year]
+    c = CONFIG["dbCollections"][year]
     return db[c]
 
 def read_answers(year, key):
     try:
-        with open(data['pathToAnswers']) as f:
+        with open(CONFIG['pathToAnswers']) as f:
             winners = json.load(f)[year][key]
             return winners
     except:
@@ -54,7 +55,7 @@ def get_awards(year):
     '''Awards is a list of strings. Do NOT change the name
     of this function or what it returns.'''
     # Your code here
-    awards = award_names.award_names(collection(year), nlp)
+    awards = read_answers(year, 'awards')
     return awards
 
 def get_nominees(year):
@@ -88,12 +89,10 @@ def pre_ceremony():
     for year, filepath in CONFIG['pathToTweets'].items():
 
         with open(filepath) as tweets_json:
-            # tweets_python = json.load(tweets_json)
+            tweets_python = json.load(tweets_json)
             c = collection(year)
-            # c.insert_many(tweets_python)
+            c.insert_many(tweets_python)
             c.create_index([('text', pymongo.TEXT)])
-            # count = c.count_documents({})
-            # print(year, count)
 
     print("Pre-ceremony processing complete.")
     return
@@ -106,13 +105,10 @@ def main():
     what it returns.'''
     # Your code here
     years = ['2013','2015','2018','2019']
-    # years = ['2019']
 
-    # print('poop')
+    awards = { year: award_names.award_names(collection(year), nlp) for year in years }
     hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
 
-    # print('hello')
-    # hosts = { '2013': ["tina fey", "amy poehler"] }   
     yearly_results = { year: 
             {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in award_list(year) }
         for year in years }
@@ -122,6 +118,7 @@ def main():
         'winners': { award: result[0] for award, result in results.items() },
         'nominees': { award: result[1] for award, result in results.items() },
         'presenters': { award: result[2] for award, result in results.items() },
+        'awards': awards[year]
     } for year, results in yearly_results.items() }
 
     json_str = json.dumps(answers)
@@ -129,9 +126,8 @@ def main():
     with open(CONFIG['pathToAnswers'], 'w+') as f:
         f.write(json_str)
 
+
     return
-
-
 
 def exit_handler():
     nlp.close()
