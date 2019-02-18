@@ -1,6 +1,10 @@
 import re
 from collections import Counter
 
+import spacy
+nlp_spacy = spacy.load('en')
+
+
 DOCUMENT_SIZE = 10000
 
 # Combine entities of the same type that are right next to each other in text
@@ -22,6 +26,22 @@ def get_names_and_combine_adjacent_entities(entities, entity_type):
       new_entities.append(current_name)
 
   return new_entities
+
+def combine_adjacent_entities(entities):
+  new_entities = []
+
+  for i, entity in enumerate(entities):
+    current_type = entity[1]    
+    current_name = entity[0]
+
+    # if the previous entity has the same type as the current entity
+    if len(new_entities) > 0 and entities[i-1][1] == current_type:
+      new_entities[-1] = (new_entities[-1][0] +' ' + current_name, current_type)
+    else:
+      new_entities.append(entity)
+
+  return new_entities
+
 
 # Using regular expressions to clean a tweet's text
 # Removes hashtags, @mentions, urls, and retweet tag 'RT'
@@ -100,11 +120,62 @@ def choose_best_entities(entities, threshold):
   top10 = c.most_common(10)
   a = [ n + ' ' + str(c) for n,c in top10 ]
   print(' '.join(a))
-  
+
   top_entities = c.most_common(n)
-  
+
+  # if not is_person:
+  #   top_entities = [(name, count) for name, count in top10 if not is_person_entity(name, db_collection, nlp) ]
+    
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
+def choose_entities_over_threshold(entities):
+  c = Counter(entities)
+  name_count_pairs = list(c.items())
+
+  for i, entity in enumerate(name_count_pairs):
+    key = entity[0]
+    count = entity[1]
+    for key2, count2 in name_count_pairs:
+      if key == key2:
+        continue
+
+      if key2 in key and count > count2:
+        c[key] += count2
+
+  top10 = c.most_common(10)
+  a = [ n + ' ' + str(c) for n,c in top10 ]
+  print(' '.join(a))
+      
+  top_entities = entities_over_threshold(top10, len(entities))
+
+  return top_entities
+
+THRESHOLD = .1
+def entities_over_threshold(top10, n_entities):
+  top_rate = top10[0][1] / n_entities
+
+  top_entities = [ name for name, count in top10 if top_rate - (count / n_entities) < THRESHOLD ]
+
+  return top_entities
+
+def is_person_entity(name, db_collection, nlp):
+  tweets = db_collection.find({ '$text': { '$search': name }}).limit(50)
+  corpus = corpify_tweets(tweets)
+  combed_entities = flatten([ all_entities_from_document(doc, nlp) for doc in corpus])
+  labels = [ label for name, label in combed_entities if name.lower() == name ]
+  c = Counter(labels)
+  classifaction = c.most_common(1)[0]
+  return classifaction == 'PERSON'
+
+def all_entities_from_document(doc, nlp):
+  named_entities = nlp.ner(doc)
+  entities = combine_adjacent_entities(named_entities) 
+  return entities
+
+def minus(search_str):
+  arr = search_str.split()
+  return ' '.join([ '-' + s for s in arr ])
+  
 #################### legacy code #################
 
 # def tf_idf(entity, db_collection):
@@ -116,9 +187,32 @@ def double_quotes(search_str):
   arr = search_str.split()
   return ' '.join([ '"' + s + '"' for s in arr ])
 
-def minus(search_str):
-  arr = search_str.split()
-  return ' '.join([ '-' + s for s in arr ])
+PEOPLE_WORDS = ['actress','actor', 'director', 'producer']
+DEAD_WORDS = [ 'performance', 'best', 'role', 'made', 'television']
+
+def is_person_award(award_name):
+  return any([ word in award_name for word in PEOPLE_WORDS ])
+
+def award_to_query(award_name):
+  document = nlp_spacy(award_name)
+  
+  arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
+  arr = list(set(arr))
+  query = ' '.join([ '"' + s + '"' for s in arr ])
+  
+  if not is_person_award(award_name):
+    query += ' ' + minus(' '.join(PEOPLE_WORDS))
+    
+  return query
+
+def award_to_soft_query(award_name):
+  document = nlp_spacy(award_name)
+  
+  arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
+  arr = list(set(arr))
+  query = ' '.join([ s for s in arr ])
+
+  return query
 
 # import datetime
 # Useful functions we use to find when the awards were awarded

@@ -78,12 +78,12 @@ def pre_ceremony():
     for year, filepath in CONFIG['pathToTweets'].items():
 
         with open(filepath) as tweets_json:
-            # tweets_python = json.load(tweets_json)
+            tweets_python = json.load(tweets_json)
             c = collection(year)
-            # c.insert_many(tweets_python)
+            c.insert_many(tweets_python)
             c.create_index([('text', pymongo.TEXT)])
-            # count = c.count_documents({})
-            # print(year, count)
+            count = c.count_documents({})
+            print(year, count)
 
     print("Pre-ceremony processing complete.")
     return
