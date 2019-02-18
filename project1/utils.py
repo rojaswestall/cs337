@@ -106,7 +106,7 @@ def choose_n_best_entities(entities, n):
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
   # return n most common entities
-def choose_best_entities(entities, threshold):
+def choose_best_entities(entities, n):
   c = Counter(entities)
   name_count_pairs = list(c.items())
 
@@ -128,6 +128,8 @@ def choose_best_entities(entities, threshold):
     
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
+THRESHOLD = .1
+
 def choose_entities_over_threshold(entities):
   c = Counter(entities)
   name_count_pairs = list(c.items())
@@ -146,15 +148,14 @@ def choose_entities_over_threshold(entities):
   a = [ n + ' ' + str(c) for n,c in top10 ]
   print(' '.join(a))
       
-  top_entities = entities_over_threshold(top10, len(entities))
+  top_entities = entities_over_threshold(top10, len(entities), THRESHOLD)
 
   return top_entities
 
-THRESHOLD = .1
-def entities_over_threshold(top10, n_entities):
+def entities_over_threshold(top10, n_entities, threshold):
   top_rate = top10[0][1] / n_entities
 
-  top_entities = [ name for name, count in top10 if top_rate - (count / n_entities) < THRESHOLD ]
+  top_entities = [ name for name, count in top10 if top_rate - (count / n_entities) < threshold ]
 
   return top_entities
 

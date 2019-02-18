@@ -70,7 +70,7 @@ def find_presenters(award_name, peak_timestamp, other_people, db_collection, nlp
   query_str = ' '.join([ utils.minus(person) for person in other_people ])
   query_str += ' ' + utils.award_to_soft_query(award_name)
   query_str += ' presents presenters introduces intros introducing announce announcing announcers -"surprise"'
-  print('query: ', query_str, '\npeak_lt: ', interval[1], '\npeak_gt: ', interval[0]) 
+  # print('query: ', query_str, '\npeak_lt: ', interval[1], '\npeak_gt: ', interval[0]) 
   tweets = relevant_tweets(interval, query_str, db_collection)
   corpus = utils.corpify_tweets(tweets)
   entities = utils.get_people(corpus, nlp)
@@ -78,15 +78,12 @@ def find_presenters(award_name, peak_timestamp, other_people, db_collection, nlp
   presenters = utils.choose_entities_over_threshold(entities)
   return presenters
 
-def find_presenters(peak, db_collection, nlp):
-  return []
-
 def get_relevant_interval(peak, negative_width, positive_width):
   interval = [ 
     peak-(negative_width*BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS),
     peak+(positive_width*BUCKETS_IN_INTERVAL*BUCKET_SIZE_MS), 
     ]
-  print(interval)
+  # print(interval)
   return interval
 
 def relevant_tweets(interval, query_str, db_collection):
