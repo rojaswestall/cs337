@@ -103,6 +103,9 @@ def main():
 
     hosts = { year: host.get_hosts(collection(year), nlp) for year in years }
 
+    best_dressed = { year: bestdressed.get_best_dressed(collection(year), nlp) for year in years }
+    worst_dressed = { year: worstdressed.get_worst_dressed(collection(year), nlp) for year in years }
+
     yearly_results = { year:
             {  award: award_people.process_award(award, hosts[year], collection(year), nlp) for award in OFFICIAL_AWARDS_1315 }
         for year in years }
@@ -112,6 +115,9 @@ def main():
         'winners': { award: result[0] for award, result in results.items() },
         'nominees': { award: result[1] for award, result in results.items() },
         'presenters': { award: result[2] for award, result in results.items() },
+        'best dressed': best_dressed[year],
+        'hosts': worst_dressed[year]
+
     } for year, results in yearly_results.items() }
 
     json_str = json.dumps(answers)
