@@ -51,10 +51,6 @@ def find_winner(award_name, peak_timestamp, db_collection, nlp):
   entities = utils.get_people(corpus, nlp) if utils.is_person_award(award_name) else get_proper_nouns(corpus, nlp)
 
   winner = utils.choose_best_entities(entities, 1)[0]
-  # if award_name == 'best television series - comedy or musical':
-  #   print('heyo')
-  #   print (interval)
-  #   print(entities)
   return winner
 
 def find_nominees(award_name, other_people, peak_timestamp, db_collection, nlp):
@@ -104,6 +100,7 @@ def relevant_tweets(interval, query_str, db_collection):
 def get_proper_nouns(corpus, nlp):
   return utils.get_entities(corpus, nlp, proper_nouns_from_document)
 
+# to SPACY
 def proper_nouns_from_document(doc, nlp):
   pos = nlp.pos_tag(doc)
   proper_nouns = utils.get_names_and_combine_adjacent_entities(pos, 'NNP')

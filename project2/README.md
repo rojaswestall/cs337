@@ -1,4 +1,4 @@
-# Recipe Transposer
+# Recipe Transformer
 
 ## Installation
 

@@ -108,7 +108,8 @@ def get_entities(corpus, nlp, entity_recognizer):
 
 # return PERSON entities from doc
 def people_from_document(doc, nlp):
-  named_entities = nlp.ner(doc)
+  ents = nlp_spacy(doc).ents # SPACY
+  named_entities = [ (ent.text, ent._label) for ent in ents ]
   people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON')
   return people
 
@@ -161,19 +162,19 @@ def entities_over_threshold(top10, n_entities, threshold):
 
   return top_entities
 
-def is_person_entity(name, db_collection, nlp):
-  tweets = db_collection.find({ '$text': { '$search': name }}).limit(50)
-  corpus = corpify_tweets(tweets)
-  combed_entities = flatten([ all_entities_from_document(doc, nlp) for doc in corpus])
-  labels = [ label for name, label in combed_entities if name.lower() == name ]
-  c = Counter(labels)
-  classifaction = c.most_common(1)[0]
-  return classifaction == 'PERSON'
+# def is_person_entity(name, db_collection, nlp):
+#   tweets = db_collection.find({ '$text': { '$search': name }}).limit(50)
+#   corpus = corpify_tweets(tweets)
+#   combed_entities = flatten([ all_entities_from_document(doc, nlp) for doc in corpus])
+#   labels = [ label for name, label in combed_entities if name.lower() == name ]
+#   c = Counter(labels)
+#   classifaction = c.most_common(1)[0]
+#   return classifaction == 'PERSON'
 
-def all_entities_from_document(doc, nlp):
-  named_entities = nlp.ner(doc)
-  entities = combine_adjacent_entities(named_entities) 
-  return entities
+# def all_entities_from_document(doc, nlp):
+#   named_entities = nlp.ner(doc)
+#   entities = combine_adjacent_entities(named_entities) 
+#   return entities
 
 def minus(search_str):
   arr = search_str.split()
@@ -216,27 +217,3 @@ def award_to_soft_query(award_name):
   query = ' '.join([ s for s in arr ])
 
   return query
-
-# import datetime
-# Useful functions we use to find when the awards were awarded
-# def sortByTime(cursor):
-#   time_dict = {}
-#   for i, tweet in enumerate(cursor):
-#       tm = tweet['timestamp_ms']
-#       # Only care about the 100 second period so use -6
-#       shortened = str(tm)[:-5]
-#       if shortened in time_dict:
-#           time_dict[shortened] +=1
-#       else:
-#           time_dict[shortened] = 1
-#   return time_dict
-
-# tweets = db[collection].find({ "$text": { "$search": '"best director - motion picture"'}})
-# dic = sortByTime(tweets)
-# for key, value in sorted(dic.items()):
-#     epoch = datetime.datetime.fromtimestamp(int(key + "00000")/1000.0)
-#     readable = epoch.strftime('%I:%M:%S')
-#     print(readable, ": ", value)
-
-# Search for tweets in a certain time
-# {timestamp_ms: {$gt: 1358090460000, $lt: 1358090700000}}
