@@ -41,3 +41,9 @@ Exiting virtual environment:
 ```sh
 exit
 ```
+
+Lint Python files:
+
+```sh
+pipenv run lint
+```

@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
+pycodestyle = "*"
 
 [packages]
 html2text = "*"
@@ -12,3 +12,6 @@ bs4 = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+lint = "pycodestyle --show-source ."
