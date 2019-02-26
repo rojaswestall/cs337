@@ -3,30 +3,40 @@
 Gabriel Rojas-Westall, Jeff Holm, David Latimore II, Dongping
 
 ## What to Install
-#### MongoDB
+
+### MongoDB
+
 Instructions for downloading and installing MongoDB can be found [here](https://docs.mongodb.com/manual/installation/).
 
-#### Stanford CoreNLP
+### Stanford CoreNLP
+
 Download version 3.9.1 of the [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/history.html) library. The version is important so we can use a python wrapper with it. The latest version of the Stanford CoreNLP library is 3.9.2 so the python wrapper is very up to date regardless.
 
 To use the Stanford CoreNLP library with Python:
 `pip install stanfordcorenlp`
 
-#### Spacy
+### Spacy
+
 To install Spacy, simply run `python3 -m spacy download en`
 
-#### NTLK
-To install NLTK, run `sudo pip install -U nltk`. You may be prompted for an administrator's password to complete this installation step. 
+### NTLK
+
+To install NLTK, run `sudo pip install -U nltk`. You may be prompted for an administrator's password to complete this installation step.
 
 ## How to run our project
+
 In order to get this project to run, you'll need Stanford CoreNLP, NLTK, MongoDB, and Spacy installed. After you've installed those technologies, you can do the following to run our project:
 
 - Run `mongod` in one terminal
-- In a second terminal, start the Stanford CoreNLP Server by `cd`ing into the Stanford CoreNLP directory (which you should have downloaded) earlier and running `java -mx4g -cp "*" --add-modules java.se.ee edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000`
+- In a second terminal, start the Stanford CoreNLP Server by `cd`-ing into the Stanford CoreNLP directory (which you should have downloaded) earlier and running one of the two commands
+  - `java -mx4g -cp "*" --add-modules java.se.ee edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000`
+  - `java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000`
 - In a third terminal window, call `python gg_api.py` to run our main function.
 
 ## Resources used and Papers referenced
-#### Papers
+
+### Papers
+
 This paper uses Twitter data to predict the box office revenue with the assumption that movies that are well talked about are well watched. So we borrowed and modified their assumptions that  “artists who are well talked about are more likely to win”. This paper also introduces us to start thinking about how to relate tweets associated with time.
 [Asur, S., & Huberman, B. A. (2010, August). Predicting the future with social media. In Proceedings of the 2010 IEEE/WIC/ACM International Conference on Web Intelligence and Intelligent Agent Technology-Volume 01 (pp. 492-499). IEEE Computer Society.](https://arxiv.org/pdf/1003.5699.pdf)
 
@@ -42,8 +52,8 @@ Parts of this paper is a nice methodological summary and survey of current metho
 This paper shows the performance of standard NLP tools is severely degraded on tweets. So we were searching different NER tools, and discovered Stanford CoreNLP.
 [Ritter, A., Clark, S., & Etzioni, O. (2011, July). Named entity recognition in tweets: an experimental study. In Proceedings of the conference on empirical methods in natural language processing (pp. 1524-1534). Association for Computational Linguistics.](http://www.aclweb.org/anthology/D11-1141)
 
+### Other Resources
 
-#### Other Resources
 - [nltk libraries and examples](https://towardsdatascience.com/named-entity-recognition-with-nltk-and-spacy-8c4a7d88e7da?fbclid=IwAR0m3EPkwcjTnqWJvxN-HKlGImYFY3X2yi7DjJKe0lHJVKpiYQK6tZidPZY)
 - [PyMongo Documentation](https://api.mongodb.com/python/current/) for mongo with python
 - [MongoDB Documentation](https://docs.mongodb.com/manual/tutorial/query-documents/) mostly for use with compass
