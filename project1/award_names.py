@@ -1,18 +1,7 @@
-import gg_api
-import award_people
-import host
-import json
-import pymongo
-import atexit
-from stanfordcorenlp import StanfordCoreNLP
 import re
 import utils
-import pprint
 from utils import safe_run_hosts
 
-import pandas as pd
-import numpy as np
-import scipy
 import nltk
 from nltk.corpus import stopwords
 from collections import Counter
@@ -85,7 +74,6 @@ def award_names(collection, nlp):
     # extract all text
     tweet_normalized_text = [normalize_tweet(raw_tweet) for raw_tweet in tweet_raw_text]
     tweet_chunks = utils.flatten([chunk_tweet(tweet_tokens) for tweet_tokens in tweet_normalized_text if chunk_tweet(tweet_tokens) is not None])
-    # pprint.pprint(utils.flatten(tweet_chunks))
 
     c = Counter(tweet_chunks)
     top26 = c.most_common(26)
