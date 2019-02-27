@@ -1,0 +1,12 @@
+n cups green chili sliced
+number measure name     method
+CD     NN/NNS  NN/NNS   VBD
+
+n tablspoons chopped eggs
+number measure method name
+
+n eggs
+number name
+
+ground black pepper to taste
+name measure

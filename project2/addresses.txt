@@ -1,0 +1,9 @@
+https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/?internalSource=hub%20recipe&referringContentType=Search
+https://www.allrecipes.com/recipe/25678/beef-stew-vi/?clickId=right%20rail0&internalSource=rr_feed_recipe_sb&referringId=10813%20referringContentType%3Drecipe
+https://www.allrecipes.com/recipe/74334/no-beans-about-it-chili/?clickId=right%20rail1&internalSource=rr_feed_recipe_sb&referringId=25678%20referringContentType%3Drecipe
+https://www.allrecipes.com/recipe/232526/bobs-little-known-less-cared-about-chili/?internalSource=similar_recipe_banner&referringId=74334&referringContentType=Recipe&clickId=simslot_1
+https://www.allrecipes.com/recipe/240118/prize-winning-chili/?internalSource=similar_recipe_banner&referringId=232526&referringContentType=Recipe&clickId=simslot_2
+https://www.allrecipes.com/recipe/218604/grilled-tofu-skewers-with-sriracha-sauce/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%203
+https://www.allrecipes.com/recipe/231376/shrimp-stirfry/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202
+https://www.allrecipes.com/recipe/25309/seans-falafel-and-cucumber-sauce/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%202
+https://www.allrecipes.com/recipe/215048/caramel-macchiato-ice-cream/?internalSource=hub%20recipe&referringContentType=Search&clickId=cardslot%203

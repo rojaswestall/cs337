@@ -3,6 +3,11 @@ import urllib.request as url
 from bs4 import BeautifulSoup
 
 
+def fetch_recipes(addresses):
+    recipes = [fetch_recipe(address) for address in addresses]
+    return recipes
+
+
 def fetch_recipe(address):
     response = url.urlopen(address)
     soup = BeautifulSoup(response, 'html.parser')

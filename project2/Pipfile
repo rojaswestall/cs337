@@ -9,6 +9,9 @@ autopep8 = "*"
 [packages]
 html2text = "*"
 bs4 = "*"
+ingredient-parser = "*"
+textblob = "*"
+nltk = "*"
 
 [requires]
 python_version = "3.7"
