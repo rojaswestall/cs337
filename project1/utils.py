@@ -1,10 +1,6 @@
 import re
 from collections import Counter
 
-import spacy
-nlp_spacy = spacy.load('en')
-
-
 DOCUMENT_SIZE = 10000
 
 def safe_run_hosts(func):
@@ -108,9 +104,9 @@ def get_entities(corpus, nlp, entity_recognizer):
 
 # return PERSON entities from doc
 def people_from_document(doc, nlp):
-  ents = nlp_spacy(doc).ents # SPACY
-  named_entities = [ (ent.text, ent._label) for ent in ents ]
-  people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON')
+  d = nlp(doc) # SPACY
+  people = [ ent.text for ent in d.ents if ent.label_ == 'PERSON' ]
+  # people = get_names_and_combine_adjacent_entities(named_entities, 'PERSON')
   return people
 
   # return n most common entities
@@ -118,14 +114,16 @@ def choose_best_entities(entities, n):
   c = Counter(entities)
 
   c = boost_full_names(c)
+  name_count_pairs = list(c.items())
+  
 
   top_entities = c.most_common(n)
-  # top10 = c.most_common(10)
-  # a = [ n + ' ' + str(c) for n,c in top10 ]
-  # print(' '.join(a))
-  # if not is_person:
-  #   top_entities = [(name, count) for name, count in top10 if not is_person_entity(name, db_collection, nlp) ]
-    
+  lst = []
+  for name, count in top_entities:
+    if all([ name not in previous_name for previous_name, _prev_count in lst]):
+      lst.append((name, count))
+
+  top_entities = lst  
   return [ name for name, _count in top_entities[:n] ] if top_entities else []
 
 def boost_full_names(c):
@@ -143,21 +141,24 @@ def boost_full_names(c):
 
 THRESHOLD = .1
 
-def choose_entities_over_threshold(entities):
+def choose_entities_over_threshold(entities, threshold=THRESHOLD):
   c = Counter(entities)
   c = boost_full_names(c)
 
   top10 = c.most_common(10)
-  # a = [ n + ' ' + str(c) for n,c in top10 ]
-  # print(' '.join(a))
+  topN = []
+  for name, count in top10:
+    if all([ name not in previous_name for previous_name, _prev_count in topN]):
+      topN.append((name, count))  
       
-  top_entities = entities_over_threshold(top10, len(entities), THRESHOLD)
+  top_entities = entities_over_threshold(topN, len(entities), threshold)
 
   return top_entities
 
 def entities_over_threshold(top10, n_entities, threshold):
   top_rate = top10[0][1] / n_entities
-
+  print('top_rate',top_rate)
+  for n, c in top10: print(n,c/n_entities)
   top_entities = [ name for name, count in top10 if top_rate - (count / n_entities) < threshold ]
 
   return top_entities
@@ -197,8 +198,8 @@ DEAD_WORDS = [ 'performance', 'best', 'role', 'made', 'television']
 def is_person_award(award_name):
   return any([ word in award_name for word in PEOPLE_WORDS ])
 
-def award_to_query(award_name):
-  document = nlp_spacy(award_name)
+def award_to_query(award_name, nlp):
+  document = nlp(award_name)
   
   arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
   arr = list(set(arr))
@@ -209,8 +210,8 @@ def award_to_query(award_name):
     
   return query
 
-def award_to_soft_query(award_name):
-  document = nlp_spacy(award_name)
+def award_to_soft_query(award_name, nlp):
+  document = nlp(award_name)
   
   arr = [ token.text for token in document if not (token.is_stop or token.is_punct or token.text in DEAD_WORDS) ]
   arr = list(set(arr))
