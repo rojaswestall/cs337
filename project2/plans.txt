@@ -1,0 +1,40 @@
+1. Write the webscrapper
+	- Input: URL
+	- Output: 
+		+ ingredients 
+		+ directions
+
+2. Parser for ingredients
+	- Input: a list of ingredients from the webpage
+	- output: a list of { name, quantity, measurement }
+
+3. Parse directions:
+	- Input: a step from the direction
+	- output: the step with tagged ingredients and tools
+
+4. Vegetarian converter:
+	- input: tagged direction and parsed ingredients
+	- output: vegetarian recipe 
+		+ sub meat to tofu, seitan, etc.
+	- (know all meats, and all meat substitutes)
+
+5. What is healthy?
+	- less fat (butter, oils) *
+		+ cut the quantity
+		+ replace 
+	- replace eggs
+		+ sub eggs for apple sauce
+	- less sugar *
+		 + sugar substitute
+		 + chocolate, marshmallow, sprinkle: fruit
+	- fresh ingredients
+	- whole grain *
+		+ white rice => brown rice
+		+ bread, pasta => whole wheat
+		+ quinoa
+		+ flour/oats/ 
+	- more veggie
+	- alternatives to fry
+		+ change of tool: fried chicken using air fryer?
+	- take out salt (low sodium) *
+
