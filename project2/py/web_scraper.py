@@ -1,7 +1,6 @@
 import html2text
 import urllib.request as url
 from bs4 import BeautifulSoup
-import sys
 
 
 def fetch_recipe(address):
@@ -37,6 +36,8 @@ def nodes_to_text(nodes):
 
 
 if __name__ == '__main__':
+    import sys
+
     address = sys.stdin.read()
     recipe = fetch_recipe(address)
 
