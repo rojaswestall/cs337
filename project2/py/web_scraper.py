@@ -49,4 +49,4 @@ if __name__ == '__main__':
 
     print('\nDIRECTIONS')
     for i, step in enumerate(recipe['directions']):
-        print('STEP'+str(i+1)+'\n', step)
+        print('STEP' + str(i + 1) + '\n', step)
