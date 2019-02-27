@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pycodestyle = "*"
+autopep8 = "*"
 
 [packages]
 html2text = "*"
@@ -14,4 +14,4 @@ bs4 = "*"
 python_version = "3.7"
 
 [scripts]
-lint = "pycodestyle --show-source ."
+lint = "autopep8 --in-place --aggressive --aggressive --recursive py"
