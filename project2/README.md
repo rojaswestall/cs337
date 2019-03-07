@@ -47,3 +47,11 @@ Lint Python files:
 ```sh
 pipenv run lint
 ```
+
+## Using the Program
+
+`py/main.py` takes an AllRecipes url from standard input and prints a transformed recipe to standard ouput. Eg:
+
+```sh
+python py/main.py < address
+```

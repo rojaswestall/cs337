@@ -12,10 +12,10 @@ class KnowledgeBase:
             self.meats = json_data['meats']
             self.meat_substitutes = json_data['meat-substitutes']
 
-    def is_meat(self, food):
-        is_meat_bools = utils.pmap(lambda m: m in food, self.meats)
-        food_is_meat = any(is_meat_bools)
-        return food_is_meat
+    def is_meat(self, ingredient):
+        is_meat_bools = utils.pmap(lambda m: m in ingredient, self.meats)
+        ingredient_is_meat = any(is_meat_bools)
+        return ingredient_is_meat
 
     def get_meat_substitute(self):
         upper_bound = len(self.meat_substitutes) - 1
