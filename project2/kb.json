@@ -1,0 +1,14 @@
+{
+  "meats": [
+    "beef",
+    "shrimp",
+    "pork",
+    "chicken",
+    "bacon"
+  ],
+  "meat-substitutes": [
+    "tofu"
+  ],
+  "methods": [],
+  "tools": []
+}
