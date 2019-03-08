@@ -1,6 +1,6 @@
 
 class Ingredient:
-    def __init__(self, quantity, measure, name):
+    def __init__(self, quantity='', measure='', name=''):
         self.quantity = quantity
         self.measure = measure
         self.name = name
