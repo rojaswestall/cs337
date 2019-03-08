@@ -53,5 +53,14 @@ pipenv run lint
 `py/main.py` takes an AllRecipes url from standard input and prints a transformed recipe to standard ouput. Eg:
 
 ```sh
-python py/main.py < address
+python py/main.py <transform_code> < address
 ```
+
+### Transform Codes
+
+- `veg` - to vegetarian
+- `meat*` - from vegetarian
+- `healthy*` - to healthy
+- `unhealthy*` - from healthy
+
+\* not yet supported
