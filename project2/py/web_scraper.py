@@ -78,11 +78,6 @@ def extract_tools(direction, kb):
             tools.append(word.capitalize())
     return tools
 
-def remove_dupes(str):
-    newList = []
-    [newList.append(word) for word in str if word not in newList]
-    return newList
-
 if __name__ == '__main__':
     import sys
 
