@@ -4,23 +4,39 @@ from ingredient import Ingredient
 
 
 def make_vegetarian(recipe, kb):
+    new_recipe = substitute_ingredients(
+        recipe, kb.is_meat, kb.get_meat_substitute)
+    return new_recipe
+
+
+def from_vegetarian(recipe, kb):
+    new_recipe = substitute_ingredients(
+        recipe, kb.is_vegge_protein, kb.get_meat)
+
+    return new_recipe
+
+
+def substitute_ingredients(recipe, identifier, substituter):
     new_ingredients = []
     directions = list(recipe.directions)
-    methods = list(recipe.methods)
-    tools = list(recipe.tools)
+
     for ingredient in recipe.ingredients:
 
-        if kb.is_meat(ingredient.name):
-            meat_substitute = kb.get_meat_substitute()
-            new_ingredient = ingredient.substitute(meat_substitute)
+        if identifier(ingredient.name):
+            substitute_name = substituter()
+
+            new_ingredient = ingredient.substitute(substitute_name)
+
             new_ingredients.append(new_ingredient)
+
             directions = fix_directions(
-                ingredient.name, meat_substitute, directions)
+                ingredient.name, substitute_name, directions)
 
         else:
             new_ingredients.append(ingredient)
 
-    new_recipe = Recipe(new_ingredients, directions, methods, tools)
+    new_recipe = Recipe(new_ingredients, directions)
+
     return new_recipe
 
 

@@ -17,10 +17,8 @@ def fetch_recipe(address, kb):
     ingredient_objs = parse_ingredients(ingredients)
 
     directions = select_directions(soup)
-    methods = parse_methods(directions, kb)
-    tools = parse_tools(directions, kb)
 
-    recipe_obj = Recipe(ingredient_objs, directions, methods, tools)
+    recipe_obj = Recipe(ingredient_objs, directions)
 
     return recipe_obj
 
@@ -82,7 +80,7 @@ if __name__ == '__main__':
     import sys
 
     address = sys.stdin.read()
-    recipe = fetch_recipe(address, kb)
+    recipe = fetch_recipe(address)
 
     print('ADDRESS')
     print(address, '\n')

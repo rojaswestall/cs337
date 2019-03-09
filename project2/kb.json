@@ -52,5 +52,23 @@
     "griddle",
     "serving platter",
     "dish"
-  ]
+  ],
+  "ingredients": {
+    "protein": {
+      "meats": [
+        "beef",
+        "shrimp",
+        "pork",
+        "chicken breast",
+        "chicken thigh",
+        "bacon",
+        "steak",
+        "tuna"
+      ],
+      "vegetarian": [
+        "tofu",
+        "seitan"
+      ]
+    }
+  }
 }

@@ -1,11 +1,10 @@
 import utils
 
+
 class Recipe:
-    def __init__(self, ingredients, directions, methods, tools):
+    def __init__(self, ingredients, directions):
         self.ingredients = ingredients
         self.directions = directions
-        self.methods = methods
-        self.tools = tools
 
     def __str__(self):
         ings = utils.pmap(str, self.ingredients)
