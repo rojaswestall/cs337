@@ -9,51 +9,6 @@
   "meat-substitutes": [
     "tofu"
   ],
-  "methods": [
-    "preheat",
-    "heat",
-    "stir",
-    "sprinkle",
-    "serve",
-    "cover",
-    "measure",
-    "whisk",
-    "soak",
-    "line",
-    "cream",
-    "beat",
-    "grease",
-    "shake",
-    "toss",
-    "refrigerate",
-    "dip",
-    "bake",
-    "turn",
-    "flip",
-    "strain",
-    "drain",
-    "cook",
-    "mix"
-  ],
-  "tools": [
-    "baking sheet",
-    "sheet",
-    "pan",
-    "pans",
-    "skillet",
-    "pot",
-    "bag",
-    "cup",
-    "sheet",
-    "spatula",
-    "stove",
-    "wooden spoon",
-    "bag",
-    "bowl",
-    "whisk",
-    "oven",
-    "griddle",
-    "serving platter",
-    "dish"
-  ]
+  "methods": [],
+  "tools": []
 }

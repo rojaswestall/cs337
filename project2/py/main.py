@@ -14,7 +14,7 @@ def main(transform_code):
 
     address = sys.stdin.read()
 
-    recipe = web_scraper.fetch_recipe(address, kb)
+    recipe = web_scraper.fetch_recipe(address)
 
     transformer = choose_transformer(transform_code)
 
@@ -27,8 +27,8 @@ def choose_transformer(transform_code):
     if transform_code == 'veg':
         return vegetarian.make_vegetarian
 
-    else:
-        print('invalid transform code. Something went wrong.')
+    else
+    print('invalid transform code. Something went wrong.')
 
 
 if __name__ == '__main__':

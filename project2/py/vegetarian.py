@@ -6,8 +6,6 @@ from ingredient import Ingredient
 def make_vegetarian(recipe, kb):
     new_ingredients = []
     directions = list(recipe.directions)
-    methods = list(recipe.methods)
-    tools = list(recipe.tools)
     for ingredient in recipe.ingredients:
 
         if kb.is_meat(ingredient.name):
@@ -20,7 +18,7 @@ def make_vegetarian(recipe, kb):
         else:
             new_ingredients.append(ingredient)
 
-    new_recipe = Recipe(new_ingredients, directions, methods, tools)
+    new_recipe = Recipe(new_ingredients, directions)
     return new_recipe
 
 
