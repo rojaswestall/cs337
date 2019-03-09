@@ -48,20 +48,21 @@ def parse_ingredients(ingredients):
     return objs
 
 def parse_methods(directions, kb):
-    allMethods = ''
+    allMethods = []
     for direction in directions:
-        allMethods += kb.extract_methods(direction)
+        allMethods.extend(kb.extract_methods(direction.lower().replace('.,', '')))
 
-    finalMethods = '\n'.join(remove_dupes(allMethods.split()))
-    return finalMethods
+    allMethods = list(set(allMethods))
+    return allMethods
 
 def parse_tools(directions, kb):
-    allTools = ''
+    print(kb.tools)
+    allTools = []
     for direction in directions:
-        allTools += kb.extract_tools(direction)
+        allTools.extend(kb.extract_tools(direction.lower().replace('.,', '')))
 
-    finalTools = '\n'.join(remove_dupes(allTools.split()))
-    return finalTools
+    allTools = list(set(allTools))
+    return allTools
 
 def remove_dupes(str):
     newList = []

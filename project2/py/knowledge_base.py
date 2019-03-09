@@ -26,18 +26,15 @@ class KnowledgeBase:
         return chosen_sub
 
     def extract_methods(self, direction):
-        methods = ''
-        direction = direction.lower().replace('.,', '')
+        methods = []
         for word in self.methods:
             if word in direction:
-                methods += word.capitalize() + '\n'
+                methods.append(word.capitalize())
         return methods
 
     def extract_tools(self, direction):
-        tools = ''
-        direction = direction.lower().replace(',.', '')
-
+        tools = []
         for word in self.tools:
             if word in direction:
-                tools += word.capitalize() + '\n'
+                tools.append(word.capitalize())
         return tools
