@@ -27,8 +27,11 @@ def choose_transformer(transform_code):
     if transform_code == 'veg':
         return vegetarian.make_vegetarian
 
-    else
-    print('invalid transform code. Something went wrong.')
+    if transform_code == 'meat':
+        return vegetarian.from_vegetarian
+
+    else:
+        print('invalid transform code. Something went wrong.')
 
 
 if __name__ == '__main__':
