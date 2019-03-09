@@ -9,8 +9,7 @@ from ingredient import Ingredient
 INGREDIENTS_SELECTOR = '[itemprop="recipeIngredient"]'
 DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span'
 
-
-def fetch_recipe(address):
+def fetch_recipe(address, kb):
     response = url.urlopen(address)
     soup = BeautifulSoup(response, 'html.parser')
 
@@ -18,8 +17,10 @@ def fetch_recipe(address):
     ingredient_objs = parse_ingredients(ingredients)
 
     directions = select_directions(soup)
+    methods = parse(directions, kb.methods)
+    tools = parse(directions, kb.tools)
 
-    recipe_obj = Recipe(ingredient_objs, directions)
+    recipe_obj = Recipe(ingredient_objs, directions, methods, tools)
 
     return recipe_obj
 
@@ -45,6 +46,21 @@ def parse_ingredients(ingredients):
     objs = utils.pmap(Ingredient, ingredients)
     return objs
 
+def parse(directions, collection):
+    matches = []
+    for direction in directions:
+        direction = direction.lower().replace('.,', '')
+        matches.extend(extract(direction, collection))
+
+    matches = list(set(matches))
+    return matches
+
+def extract(direction, collection): # takes a list from knowledge base and extracts any matches that are in the direction
+    lst = []
+    for word in collection:
+        if word in direction:
+            lst.append(word.capitalize())
+    return lst
 
 if __name__ == '__main__':
     import sys

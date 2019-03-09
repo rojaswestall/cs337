@@ -14,7 +14,7 @@ def main(transform_code):
 
     address = sys.stdin.read()
 
-    recipe = web_scraper.fetch_recipe(address)
+    recipe = web_scraper.fetch_recipe(address, kb)
 
     transformer = choose_transformer(transform_code)
 

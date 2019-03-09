@@ -19,6 +19,8 @@ def from_vegetarian(recipe, kb):
 def substitute_ingredients(recipe, identifier, substituter):
     new_ingredients = []
     directions = list(recipe.directions)
+    methods = list(recipe.methods)
+    tools = list(recipe.tools)    
 
     for ingredient in recipe.ingredients:
 
@@ -35,7 +37,7 @@ def substitute_ingredients(recipe, identifier, substituter):
         else:
             new_ingredients.append(ingredient)
 
-    new_recipe = Recipe(new_ingredients, directions)
+    new_recipe = Recipe(new_ingredients, directions, methods, tools)
 
     return new_recipe
 

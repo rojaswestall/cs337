@@ -11,6 +11,8 @@ class KnowledgeBase:
             json_data = json.load(f)
             self.meats = json_data['ingredients']['protein']['meats']
             self.vegge_proteins = json_data['ingredients']['protein']['vegetarian']
+            self.methods = json_data['methods']
+            self.tools = json_data['tools']
 
     def is_ingredient_type(self, ingredient, collection):
         is_type_bools = utils.pmap(lambda m: m in ingredient, collection)

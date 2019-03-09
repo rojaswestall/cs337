@@ -1,4 +1,48 @@
 {
+  "methods": [
+    "preheat",
+    "heat",
+    "stir",
+    "sprinkle",
+    "serve",
+    "cover",
+    "measure",
+    "whisk",
+    "soak",
+    "line",
+    "cream",
+    "beat",
+    "grease",
+    "shake",
+    "toss",
+    "refrigerate",
+    "dip",
+    "bake",
+    "turn",
+    "flip",
+    "strain",
+    "drain",
+    "cook",
+    "mix"
+  ],
+  "tools": [
+    "baking sheet",
+    "pan",
+    "skillet",
+    "pot",
+    "bag",
+    "cup",
+    "spatula",
+    "stove",
+    "wooden spoon",
+    "bag",
+    "bowl",
+    "whisk",
+    "oven",
+    "griddle",
+    "serving platter",
+    "dish"
+  ],
   "ingredients": {
     "protein": {
       "meats": [
@@ -16,7 +60,5 @@
         "seitan"
       ]
     }
-  },
-  "methods": [],
-  "tools": []
+  }
 }
