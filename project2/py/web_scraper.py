@@ -52,14 +52,21 @@ def parse_methods(directions, kb):
     for direction in directions:
         allMethods += kb.extract_methods(direction)
 
-    return allMethods
+    finalMethods = '\n'.join(remove_dupes(allMethods.split()))
+    return finalMethods
 
 def parse_tools(directions, kb):
     allTools = ''
     for direction in directions:
         allTools += kb.extract_tools(direction)
 
-    return allTools
+    finalTools = '\n'.join(remove_dupes(allTools.split()))
+    return finalTools
+
+def remove_dupes(str):
+    newList = []
+    [newList.append(word) for word in str if word not in newList]
+    return newList
 
 if __name__ == '__main__':
     import sys

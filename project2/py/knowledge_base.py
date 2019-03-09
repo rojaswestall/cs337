@@ -27,14 +27,17 @@ class KnowledgeBase:
 
     def extract_methods(self, direction):
         methods = ''
-        for word in direction.split():
-            if word.lower() in self.methods:
-                methods += word + '\n'
+        direction = direction.lower().replace('.,', '')
+        for word in self.methods:
+            if word in direction:
+                methods += word.capitalize() + '\n'
         return methods
 
     def extract_tools(self, direction):
         tools = ''
-        for word in direction.split():
-            if word.lower() in self.tools:
-                tools += word + '\n'
+        direction = direction.lower().replace(',.', '')
+
+        for word in self.tools:
+            if word in direction:
+                tools += word.capitalize() + '\n'
         return tools
