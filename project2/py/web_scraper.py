@@ -10,7 +10,7 @@ INGREDIENTS_SELECTOR = '[itemprop="recipeIngredient"]'
 DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span'
 
 
-def fetch_recipe(address):
+def fetch_recipe(address, kb):
     response = url.urlopen(address)
     soup = BeautifulSoup(response, 'html.parser')
 
@@ -18,8 +18,10 @@ def fetch_recipe(address):
     ingredient_objs = parse_ingredients(ingredients)
 
     directions = select_directions(soup)
+    methods = parse_methods(directions, kb)
+    tools = parse_tools(directions, kb)
 
-    recipe_obj = Recipe(ingredient_objs, directions)
+    recipe_obj = Recipe(ingredient_objs, directions, methods, tools)
 
     return recipe_obj
 
@@ -45,12 +47,25 @@ def parse_ingredients(ingredients):
     objs = utils.pmap(Ingredient, ingredients)
     return objs
 
+def parse_methods(directions, kb):
+    allMethods = ''
+    for direction in directions:
+        allMethods += kb.extract_methods(direction)
+
+    return allMethods
+
+def parse_tools(directions, kb):
+    allTools = ''
+    for direction in directions:
+        allTools += kb.extract_tools(direction)
+
+    return allTools
 
 if __name__ == '__main__':
     import sys
 
     address = sys.stdin.read()
-    recipe = fetch_recipe(address)
+    recipe = fetch_recipe(address, kb)
 
     print('ADDRESS')
     print(address, '\n')
