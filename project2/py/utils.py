@@ -19,6 +19,16 @@ def pmap(function, lst):
     return new_lst
 
 
+def pfilter(predicate, lst):
+    new_lst = [element for element in lst if predicate(element)]
+    return new_lst
+
+
+def pfilter_map(predicate, function, lst):
+    new_lst = [function(element) for element in lst if predicate(element)]
+    return new_lst
+
+
 def nested_map(function, lst):
     new_lst = [pmap(function, sublst) for sublst in lst]
     return new_lst

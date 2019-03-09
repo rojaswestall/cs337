@@ -11,7 +11,7 @@ def parse_transform_code():
         action="store",
         type=str,
         help='Choose Recipe Transformation',
-        choices=['veg'])
+        choices=['veg', 'meat'])
 
     args = vars(parser.parse_args())
 

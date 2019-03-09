@@ -1,14 +1,22 @@
 {
-  "meats": [
-    "beef",
-    "shrimp",
-    "pork",
-    "chicken",
-    "bacon"
-  ],
-  "meat-substitutes": [
-    "tofu"
-  ],
+  "ingredients": {
+    "protein": {
+      "meats": [
+        "beef",
+        "shrimp",
+        "pork",
+        "chicken breast",
+        "chicken thigh",
+        "bacon",
+        "steak",
+        "tuna"
+      ],
+      "vegetarian": [
+        "tofu",
+        "seitan"
+      ]
+    }
+  },
   "methods": [],
   "tools": []
 }
