@@ -9,7 +9,6 @@ from ingredient import Ingredient
 INGREDIENTS_SELECTOR = '[itemprop="recipeIngredient"]'
 DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span'
 
-
 def fetch_recipe(address, kb):
     response = url.urlopen(address)
     soup = BeautifulSoup(response, 'html.parser')
@@ -50,19 +49,34 @@ def parse_ingredients(ingredients):
 def parse_methods(directions, kb):
     allMethods = []
     for direction in directions:
-        allMethods.extend(kb.extract_methods(direction.lower().replace('.,', '')))
+        direction = direction.lower().replace('.,', '')
+        allMethods.extend(extract_methods(direction, kb))
 
     allMethods = list(set(allMethods))
     return allMethods
 
 def parse_tools(directions, kb):
-    print(kb.tools)
     allTools = []
     for direction in directions:
-        allTools.extend(kb.extract_tools(direction.lower().replace('.,', '')))
+        direction = direction.lower().replace('.,', '')
+        allTools.extend(extract_tools(direction, kb))
 
     allTools = list(set(allTools))
     return allTools
+
+def extract_methods(direction, kb):
+    methods = []
+    for word in kb.methods:
+        if word in direction:
+            methods.append(word.capitalize())
+    return methods
+
+def extract_tools(direction, kb):
+    tools = []
+    for word in kb.tools:
+        if word in direction:
+            tools.append(word.capitalize())
+    return tools
 
 def remove_dupes(str):
     newList = []

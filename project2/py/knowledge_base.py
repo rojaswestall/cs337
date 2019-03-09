@@ -24,17 +24,3 @@ class KnowledgeBase:
         index = random.randint(0, upper_bound)
         chosen_sub = self.meat_substitutes[index]
         return chosen_sub
-
-    def extract_methods(self, direction):
-        methods = []
-        for word in self.methods:
-            if word in direction:
-                methods.append(word.capitalize())
-        return methods
-
-    def extract_tools(self, direction):
-        tools = []
-        for word in self.tools:
-            if word in direction:
-                tools.append(word.capitalize())
-        return tools
