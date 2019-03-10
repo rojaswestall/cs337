@@ -1,9 +1,9 @@
 from pymongo import MongoClient
 import utils
-import atexit
 import json
-from stanfordcorenlp import StanfordCoreNLP
+import spacy
 
+nlp = spacy.load('en')
 # Connect to the Mongo Client
 client = MongoClient()
 
@@ -14,9 +14,6 @@ collection = data["dbCollections"]["2013"]
 db = client[data["dbName"]]
 f.close()
 
-# Open the Stanford CoreNLP Pipeline
-nlp = StanfordCoreNLP('http://localhost', port=9000)
-
 # We need to be passed the Stanford CoreNLP pipeline
 def get_best_dressed(collection, nlp):
     best_dressed_tweets = collection.find({ "$text": { "$search": '"look" love stunning gorgeous -RT -tina -ugly -awful'} }).limit(2000)
@@ -26,10 +23,5 @@ def get_best_dressed(collection, nlp):
 
     print(best_dressed)
     return best_dressed
-
-def exit_handler():
-    nlp.close()
-
-atexit.register(exit_handler)
 
 # get_best_dressed(db['gg2013'], nlp)
