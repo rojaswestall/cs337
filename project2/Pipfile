@@ -9,6 +9,7 @@ autopep8 = "*"
 [packages]
 html2text = "*"
 bs4 = "*"
+nltk = "*"
 
 [requires]
 python_version = "3.7"
