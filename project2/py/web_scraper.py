@@ -2,12 +2,14 @@ import html2text
 import urllib.request as url
 from bs4 import BeautifulSoup
 from recipe import Recipe
+from parse_ingredients import parse_ingredients
 
 import utils
 from ingredient import Ingredient
 
 INGREDIENTS_SELECTOR = '[itemprop="recipeIngredient"]'
-DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span'
+DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span.recipe-directions__list--item'
+
 
 def fetch_recipe(address, kb):
     response = url.urlopen(address)
@@ -42,10 +44,6 @@ def nodes_to_text(nodes):
     return [node.text for node in nodes]
 
 
-def parse_ingredients(ingredients):
-    objs = utils.pmap(Ingredient, ingredients)
-    return objs
-
 def parse(directions, collection):
     matches = []
     for direction in directions:
@@ -55,12 +53,16 @@ def parse(directions, collection):
     matches = list(set(matches))
     return matches
 
-def extract(direction, collection): # takes a list from knowledge base and extracts any matches that are in the direction
+
+# takes a list from knowledge base and extracts any matches that are in
+# the direction
+def extract(direction, collection):
     lst = []
     for word in collection:
         if word in direction:
             lst.append(word.capitalize())
     return lst
+
 
 if __name__ == '__main__':
     import sys
@@ -68,13 +70,4 @@ if __name__ == '__main__':
     address = sys.stdin.read()
     recipe = fetch_recipe(address)
 
-    print('ADDRESS')
-    print(address, '\n')
-
-    print('INGREDIENTS')
-    for i in recipe['ingredients']:
-        print(i)
-
-    print('\nDIRECTIONS')
-    for i, step in enumerate(recipe['directions']):
-        print('STEP' + str(i + 1) + '\n', step)
+    print(recipe)

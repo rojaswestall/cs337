@@ -20,7 +20,7 @@ def substitute_ingredients(recipe, identifier, substituter):
     new_ingredients = []
     directions = list(recipe.directions)
     methods = list(recipe.methods)
-    tools = list(recipe.tools)    
+    tools = list(recipe.tools)
 
     for ingredient in recipe.ingredients:
 
