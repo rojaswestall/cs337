@@ -3,7 +3,7 @@ import nltk
 from nltk.corpus import stopwords
 from collections import Counter
 from fractions import Fraction
-import numpy as np
+
 def clean_ingredients(ing):
     # basic cleaning
         # remove all punctiation
@@ -13,10 +13,12 @@ def clean_ingredients(ing):
     ing = ' '.join(re.sub(pattern," ",ing).split())
     return ing
 
+
 def remove_allPunct(ing):
     pattern = '[.,;!$%^&*()/-]'
     ing = ' '.join(re.sub(pattern," ",ing).split())
     return ing
+
 
 def str_nonumber(ing):
     pattern = '[\d\s\d+]'
@@ -36,6 +38,7 @@ def normalize_ingredients(ing):
     ing_normalized_text = [word for word in ing_tokens if word not in stop_words_nltk]
 
     return ing_normalized_text
+
 
 def pos_tag_ingredients(normalized_tokens):
     pos_tag_ing = nltk.pos_tag(normalized_tokens)
@@ -78,8 +81,15 @@ def process_qm(lst):
 def parse_ingredients(ing_string):
     ''' 
     ------------------------------------------------------------------------ 
-    input: a string of directions
+    input: a string of ingredients
+        - '2 tablespoons minced fresh ginger root'
     output: a dictionary
+        {'text': '2 tablespoons minced fresh ginger root',
+         'ingredient': 'ginger root',
+         'quantity': '2',
+         'measurement': 'tablespoons',
+         'descriptor': 'fresh',
+         'preparation': 'minced'}
     ------------------------------------------------------------------------ 
     '''
     # Measurement: knowledge base
@@ -145,7 +155,7 @@ def parse_ingredients(ing_string):
     for_veggie = ['packed', 'fresh', 'large', 'condensed', 'very ripe']
     for_seafood = ['frozen', 'cooked', 'freshly']
     for_seasoning = ['ground', 'distilled', 'heavy', 'dry', 'extra virgin', 'reduced sodium', 'low sodium']
-    country_style = ['italian style', 'chinese sstyle', 'swiss']
+    country_style = ['italian style', 'chinese style', 'swiss']
     all_descriptor = for_meat + for_veggie + for_seafood + for_seasoning
 
 
@@ -178,7 +188,10 @@ def parse_ingredients(ing_string):
     prep_lst += hard_prep_lst 
     prep_lst = list(set(prep_lst))
 
-    if p_maybe != []:
+
+    if prep_lst == [] and p_maybe != []:
+        preparation = p_maybe[0]
+    elif p_maybe != [] and not prep_lst:
         preparation = ' and '.join(prep_lst) + ' and ' + p_maybe[0]
     else:
         if prep_lst != []:
