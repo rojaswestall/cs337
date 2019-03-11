@@ -21,7 +21,6 @@ def main(transformer):
 
     transformed_recipe = transformer(recipe, kb)
 
-    print('# Transformed Recipe\n')
     print(transformed_recipe)
 
 
