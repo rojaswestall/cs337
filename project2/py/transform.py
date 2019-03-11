@@ -79,6 +79,7 @@ def change_quantities(recipe, predicate, factor):
         new_ingredients,
         recipe.directions,
         recipe.methods,
+        recipe.primary_method,
         recipe.tools)
 
     return new_recipe
@@ -118,6 +119,7 @@ def substitute_ingredients(recipe, predicate, substituter):
         new_ingredients,
         directions,
         recipe.methods,
+        recipe.primary_method,
         recipe.tools)
 
     return new_recipe
