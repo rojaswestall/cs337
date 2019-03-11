@@ -15,7 +15,8 @@ class Recipe:
         s = self._format_section('INGREDIENTS', ings)
         s += self._format_section('DIRECTIONS', self.directions)
         s += self._format_section('METHODS', self.methods)
-        s += 'PRIMARY METHOD\n' + self.primary_method.capitalize() + '\n\n'
+        # s += 'PRIMARY METHOD\n' + self.primary_method.capitalize() + '\n\n'
+        s += self._format_section('PRIMARY METHOD', self.primary_method)
         s += self._format_section('TOOLS', self.tools)
         return s
 
