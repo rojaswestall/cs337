@@ -60,5 +60,145 @@
         "seitan"
       ]
     }
+  },
+  "measurements": {
+    "liquids": [
+      "teaspoon",
+      "teaspoons",
+      "tablespoon",
+      "tablespoons",
+      "dessertspoon",
+      "dessertspoons",
+      "gallen",
+      "gallens",
+      "quart",
+      "quarts",
+      "bottle",
+      "bottles",
+      "cup",
+      "cups"
+    ],
+    "solids": [
+      "ounce",
+      "ounces",
+      "pound",
+      "pounds",
+      "slice",
+      "slices",
+      "inch",
+      "inches",
+      "bag",
+      "bags",
+      "packet",
+      "packets",
+      "package",
+      "packages",
+      "clove",
+      "cloves",
+      "pinch",
+      "pinches",
+      "piece",
+      "pieces",
+      "can",
+      "cans",
+      "bag",
+      "bags",
+      "head",
+      "heads",
+      "bunch",
+      "bunches",
+      "cube",
+      "cubes",
+      "strip",
+      "strips",
+      "cube",
+      "cubes"
+    ]
+  },
+  "descriptors": {
+    "meat": [
+      "lean",
+      "tender",
+      "skinless",
+      "boneless",
+      "refrigerated",
+      "warm",
+      "instant"
+    ],
+    "veggie": [
+      "packed",
+      "organic", 
+      "fresh", 
+      "large", 
+      "condensed",
+      "ripe",
+      "very ripe"
+    ],
+    "seafood": [
+      "frozen",
+      "cooked",
+      "freshly"
+    ],
+    "seasoning": [
+      "ground",
+      "distilled",
+      "heavy",
+      "dry",
+      "extra virgin",
+      "reduced sodium",
+      "low sodium"
+    ],
+    "style": [
+      "italian",
+      "chinese",
+      "swiss"
+    ]
+  },
+  "preparation": {
+    "prep": [
+      "chopped",
+      "cubed",
+      "peeled",
+      "seeded",
+      "cored",
+      "crumbled",
+      "minced",
+      "shredded",
+      "melted",
+      "blanched",
+      "crushed",
+      "sliced",
+      "removed",
+      "cut",
+      "crumbled",
+      "diced",
+      "mashed",
+      "dried",
+      "sweetened",
+      "unsalted",
+      "julienned",
+      "separated",
+      "rinsed",
+      "peeled",
+      "halved",
+      "rinsed",
+      "drained",
+      "beaten",
+      "thawed",
+      "rubbed",
+      "seasoned",
+      "divided",
+      "torn"
+    ],
+    "hard_prep": [
+      "finely chopped",
+      "coarsely chopped",
+      "roughly chopped",
+      "thinly sliced",
+      "casings removed",
+      "finely diced",
+      "separated florets",
+      "matchstick cut"
+    ]
   }
 }

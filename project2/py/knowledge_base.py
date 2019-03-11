@@ -13,6 +13,15 @@ class KnowledgeBase:
             self.vegge_proteins = json_data['ingredients']['protein']['vegetarian']
             self.methods = json_data['methods']
             self.tools = json_data['tools']
+            self.liquid_measurements = json_data['measurements']['liquids']
+            self.solid_measurements = json_data['measurements']['solids']
+            self.meat_descriptors = json_data['descriptors']['meat']
+            self.veggie_descriptors = json_data['descriptors']['veggie']
+            self.seafood_descriptors = json_data['descriptors']['seafood']
+            self.seasoning_descriptors = json_data['descriptors']['seasoning']
+            self.style_descriptors = json_data['descriptors']['style']
+            self.prep = json_data['preparation']['prep']
+            self.hard_prep = json_data['preparation']['hard_prep']
 
     def is_ingredient_type(self, ingredient, collection):
         is_type_bools = utils.pmap(lambda m: m in ingredient, collection)

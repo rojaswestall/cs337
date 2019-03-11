@@ -16,7 +16,7 @@ def fetch_recipe(address, kb):
     soup = BeautifulSoup(response, 'html.parser')
 
     ingredients = select_ingredients(soup)
-    ingredient_objs = parse_ingredients(ingredients)
+    ingredient_objs = parse_ingredients(ingredients, kb)
 
     directions = select_directions(soup)
     methods = parse(directions, kb.methods)

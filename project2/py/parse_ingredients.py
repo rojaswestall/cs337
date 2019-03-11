@@ -71,12 +71,12 @@ def process_qm(lst):
     return output_lst
 
 
-def parse_ingredients(ingredients):
-    ingredient_objs = utils.pmap(parse_ingredient, ingredients)
+def parse_ingredients(ingredients, kb):
+    ingredient_objs = [parse_ingredient(item, kb) for item in ingredients]
     return ingredient_objs
 
 
-def parse_ingredient(ing_string):
+def parse_ingredient(ing_string, kb):
     '''
     ------------------------------------------------------------------------
     input: a string of ingredients
@@ -91,56 +91,8 @@ def parse_ingredient(ing_string):
     ------------------------------------------------------------------------
     '''
     # Measurement: knowledge base
-    for_liquids = [
-        'teaspoon',
-        'teaspoons',
-        'tablespoon',
-        'tablespoons',
-        'dessertspoon',
-        'dessertspoons',
-        'gallen',
-        'gallens',
-        'quart',
-        'quarts',
-        'bottle',
-        'bottles',
-        'cup',
-        'cups']
-    for_solids = [
-        'ounce',
-        'ounces',
-        'pound',
-        'pounds',
-        'slice',
-        'slices',
-        'inch',
-        'inches',
-        'bag',
-        'bags',
-        'packet',
-        'packets',
-        'package',
-        'packages',
-        'clove',
-        'cloves',
-        'pinch',
-        'pinches',
-        'piece',
-        'pieces',
-        'can',
-        'cans',
-        'bag',
-        'bags',
-        'head',
-        'heads',
-        'bunch',
-        'bunches',
-        'cube',
-        'cubes',
-        'strip',
-        'strips',
-        'cube',
-        'cubes']
+    for_liquids = kb.liquid_measurements
+    for_solids = kb.solid_measurements
 
     quantity_measurements = for_liquids + for_solids
     cleaned_string = clean_ingredients(ing_string)
@@ -194,70 +146,21 @@ def parse_ingredient(ing_string):
     ing_sstring = ' '.join(ing_tokens)
     ##########################################################################
     # Knowledge base: descriptor
-    for_meat = [
-        'lean',
-        'skinless',
-        'boneless',
-        'refrigerated',
-        'warm',
-        'instant']
-    for_veggie = ['packed', 'fresh', 'large', 'condensed', 'very ripe']
-    for_seafood = ['frozen', 'cooked', 'freshly']
-    for_seasoning = [
-        'ground',
-        'distilled',
-        'heavy',
-        'dry',
-        'extra virgin',
-        'reduced sodium',
-        'low sodium']
-    country_style = ['italian style', 'chinese style', 'swiss']
+    for_meat = kb.meat_descriptors
+    for_veggie = kb.veggie_descriptors
+    for_seafood = kb.seafood_descriptors
+    for_seasoning = kb.seasoning_descriptors
+
+    ######## Is not used yet ########
+    country_style = kb.style_descriptors
+    # country_style = ['italian style', 'chinese style', 'swiss']
+    #################################
+
     all_descriptor = for_meat + for_veggie + for_seafood + for_seasoning
 
     # Knowledge base: Preparation
-    hard_prep = [
-        'finely chopped',
-        'coarsely chopped',
-        'roughly chopped',
-        'thinly sliced',
-        'casings removed',
-        'finely diced',
-        'separated florets',
-        'matchstick cut']
-    prep = [
-        'chopped',
-        'cubed',
-        'peeled',
-        'seeded',
-        'cored',
-        'crumbled',
-        'minced',
-        'shredded',
-        'melted',
-        'blanched',
-        'crushed',
-        'sliced',
-        'removed',
-        'cut',
-        'crumbled',
-        'diced',
-        'mashed',
-        'dried',
-        'sweetened',
-        'unsalted',
-        'julienned',
-        'separated',
-        'rinsed',
-        'peeled',
-        'halved',
-        'rinsed',
-        'drained',
-        'beaten',
-        'thawed',
-        'rubbed',
-        'seasoned',
-        'divided',
-        'torn']
+    hard_prep = kb.hard_prep
+    prep = kb.prep
 
     descriptor_lst = []
     for element in all_descriptor:
