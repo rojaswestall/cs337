@@ -1,18 +1,30 @@
 import argparse
+import transform
+
+TRANSFORM_CODE_MAP = {
+    'veg': transform.to_vegetarian,
+    'meat': transform.from_vegetarian,
+    'healthy': transform.to_healthy,
+    'unhealthy': transform.from_healthy,
+}
 
 
 def parse_transform_code():
     parser = argparse.ArgumentParser(
-        description='Example with nonoptional arguments',
+        description='Recipe Transformer',
     )
 
     parser.add_argument(
-        'transformation',
+        'transform code',
         action="store",
         type=str,
         help='Choose Recipe Transformation',
-        choices=['veg', 'meat'])
+        choices=TRANSFORM_CODE_MAP.keys())
 
     args = vars(parser.parse_args())
 
-    return args['transformation']
+    code = args['transform code']
+
+    transformer = TRANSFORM_CODE_MAP[code]
+
+    return transformer

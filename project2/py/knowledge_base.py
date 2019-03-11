@@ -22,11 +22,22 @@ class KnowledgeBase:
             self.style_descriptors = json_data['descriptors']['style']
             self.prep = json_data['preparation']['prep']
             self.hard_prep = json_data['preparation']['hard_prep']
+            self.scalable_ingredients = json_data['ingredients']['scalable']
+            healthy_unhealthy_relations = json_data['ingredients']['healthy_unhealthy_subs']
+            self.healthy_to_unhealthy = {
+                healthy: unhealthy for healthy,
+                unhealthy in healthy_unhealthy_relations}
+            self.unhealthy_to_healthy = {
+                unhealthy: healthy for healthy,
+                unhealthy in healthy_unhealthy_relations}
+
+    def is_item_type(self, item, collection):
+        is_type_bools = utils.pmap(lambda m: m in item, collection)
+        item_is_type = any(is_type_bools)
+        return item_is_type
 
     def is_ingredient_type(self, ingredient, collection):
-        is_type_bools = utils.pmap(lambda m: m in ingredient, collection)
-        ingredient_is_type = any(is_type_bools)
-        return ingredient_is_type
+        return self.is_item_type(ingredient.name, collection)
 
     def is_meat(self, ingredient):
         ingredient_is_meat = self.is_ingredient_type(ingredient, self.meats)
@@ -37,16 +48,42 @@ class KnowledgeBase:
             ingredient, self.vegge_proteins)
         return ingredient_is_veg_protein
 
-    def get_substitute(self, collection):
+    def is_scalable_ingredient(self, ingredient):
+        return self.is_ingredient_type(ingredient, self.scalable_ingredients)
+
+    def is_unhealthy(self, ingredient):
+        return self.is_ingredient_type(
+            ingredient, self.unhealthy_to_healthy.keys())
+
+    def is_healthy(self, ingredient):
+        return self.is_ingredient_type(
+            ingredient, self.healthy_to_unhealthy.keys())
+
+    def get_random_substitute(self, collection):
         upper_bound = len(collection) - 1
         index = random.randint(0, upper_bound)
         chosen_sub = collection[index]
         return chosen_sub
 
+    def get_determinate_substitute(self, ingredient, collection):
+        if ingredient.name in collection:
+            return collection[ingredient.name]
+
+        else:
+            return ingredient.name
+
+    def get_healthy_substitute(self, ingredient):
+        return self.get_determinate_substitute(
+            ingredient, self.healthy_to_unhealthy)
+
+    def get_unhealthy_substitute(self, ingredient):
+        return self.get_determinate_substitute(
+            ingredient, self.unhealthy_to_healthy)
+
     def get_meat_substitute(self):
-        protein = self.get_substitute(self.vegge_proteins)
+        protein = self.get_random_substitute(self.vegge_proteins)
         return protein
 
     def get_meat(self):
-        meat = self.get_substitute(self.meats)
+        meat = self.get_random_substitute(self.meats)
         return meat

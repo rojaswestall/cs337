@@ -23,7 +23,8 @@
     "strain",
     "drain",
     "cook",
-    "mix"
+    "mix",
+    "simmer"
   ],
   "tools": [
     "baking sheet",
@@ -41,7 +42,8 @@
     "oven",
     "griddle",
     "serving platter",
-    "dish"
+    "dish",
+    "saucepan"
   ],
   "ingredients": {
     "protein": {
@@ -59,7 +61,23 @@
         "tofu",
         "seitan"
       ]
-    }
+    },    
+    "scalable": [
+      "salt",
+      "butter",
+      "lard",
+      "white sugar",
+      "brown sugar",
+      "sugar"
+    ],
+    "healthy_unhealthy_subs": [
+      ["margarine", "butter"],
+      ["brown rice", "white rice"],
+      ["whole wheat bread", "white bread"],
+      ["whole grain pasta", "pasta"],
+      ["whole grain spaghetti", "spaghetti"],
+      ["coconut cream", "heavy cream"]
+    ]
   },
   "measurements": {
     "liquids": [

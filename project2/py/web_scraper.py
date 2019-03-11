@@ -60,7 +60,7 @@ def extract(direction, collection):
     lst = []
     for word in collection:
         if word in direction:
-            lst.append(word.capitalize())
+            lst.append(word)
     return lst
 
 

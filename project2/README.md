@@ -5,7 +5,7 @@
 This project uses [`pipenv`](https://pipenv.readthedocs.io/en/latest/) to manage dependencies. Make sure you have it installed before working on the project:
 
 ```sh
-pip install --user pipenv
+pip install pipenv
 ```
 
 First navigate to the `project2` directory. Then install dependencies:
@@ -53,14 +53,12 @@ pipenv run lint
 `py/main.py` takes an AllRecipes url from standard input and prints a transformed recipe to standard ouput. Eg:
 
 ```sh
-python py/main.py <transform_code> < address
+python py/main.py {transform_code} < address
 ```
 
 ### Transform Codes
 
 - `veg` - to vegetarian
-- `meat*` - from vegetarian
-- `healthy*` - to healthy
-- `unhealthy*` - from healthy
-
-\* not yet supported
+- `meat` - from vegetarian
+- `healthy` - to healthy
+- `unhealthy` - from healthy
