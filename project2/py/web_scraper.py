@@ -65,19 +65,19 @@ def extract(direction, collection):
             lst.append(word)
     return lst
 
-def get_primary_method(directions, collection):
+def get_primary_method(directions, methods):
     # Go through all directions & return whichever primary cooking method is mentioned most frequently.
     methods_dict = {}
     for direction in directions:
         direction = direction.lower().replace('.', '').split()
-        for word in collection:
+        for word in methods:
             if word in direction:
                 if word in methods_dict:
                     methods_dict[word] += direction.count(word)
                 else:
                     methods_dict[word] = 1
     sorted_methods = sorted(methods_dict.items(), key=operator.itemgetter(1))
-    return sorted_methods[0][0]
+    return [sorted_methods[0][0]]
 
 if __name__ == '__main__':
     import sys
