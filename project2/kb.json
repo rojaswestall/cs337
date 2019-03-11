@@ -2,6 +2,7 @@
   "methods": [
     "preheat",
     "heat",
+    "boil",
     "stir",
     "sprinkle",
     "serve",
@@ -22,9 +23,17 @@
     "flip",
     "strain",
     "drain",
-    "cook",
     "mix",
     "simmer"
+  ],
+  "primary_methods": [
+    "bake",
+    "boil",
+    "mix",
+    "broil",
+    "fry",
+    "steam",
+    "grill"
   ],
   "tools": [
     "baking sheet",
@@ -158,9 +167,9 @@
     ],
     "veggie": [
       "packed",
-      "organic", 
-      "fresh", 
-      "large", 
+      "organic",
+      "fresh",
+      "large",
       "condensed",
       "ripe",
       "very ripe"

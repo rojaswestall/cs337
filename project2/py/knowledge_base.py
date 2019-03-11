@@ -10,6 +10,7 @@ class KnowledgeBase:
         with open(filepath) as f:
             json_data = json.load(f)
             self.methods = json_data['methods']
+            self.primary_methods = json_data['primary_methods']
             self.tools = json_data['tools']
 
             self.liquid_measurements = json_data['measurements']['liquids']
