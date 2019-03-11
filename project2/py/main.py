@@ -21,7 +21,8 @@ def main(transformer):
 
     transformed_recipe = transformer(recipe, kb)
 
-    print('TRANSFORMED RECIPE\n\n', transformed_recipe)
+    print('# Transformed Recipe\n')
+    print(transformed_recipe)
 
 
 if __name__ == '__main__':

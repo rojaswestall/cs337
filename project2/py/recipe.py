@@ -11,13 +11,13 @@ class Recipe:
     def __str__(self):
         ings = utils.pmap(str, self.ingredients)
 
-        s = self._format_section('INGREDIENTS', ings)
-        s += self._format_section('DIRECTIONS', self.directions)
-        s += self._format_section('METHODS', self.methods)
-        s += self._format_section('TOOLS', self.tools)
+        s = self._format_section('Ingredients', ings)
+        s += self._format_section('Directions', self.directions)
+        s += self._format_section('Methods', self.methods)
+        s += self._format_section('Tools', self.tools)
         return s
 
     def _format_section(self, title, lst):
         lst = utils.pmap(lambda s: s.capitalize(), lst)
-        s = title + '\n' + '\n'.join(lst) + '\n\n'
+        s = '## ' + title + '\n\n- ' + '\n- '.join(lst) + '\n\n'
         return s
