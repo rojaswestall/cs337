@@ -143,17 +143,24 @@
       "strip",
       "strips",
       "cube",
-      "cubes"
+      "cubes",
+      "envelope",
+      "envelopes",
+      "sheet",
+      "sheets"
     ]
   },
   "descriptors": {
     "meat": [
+      "raw",
       "lean",
       "tender",
       "skinless",
       "boneless",
       "refrigerated",
       "warm",
+      "lukewarm",
+      "hot",
       "instant"
     ],
     "veggie": [
@@ -172,17 +179,31 @@
     ],
     "seasoning": [
       "ground",
+      "all purpose",
+      "boiling",
+      "frying",
+      "active",
       "distilled",
       "heavy",
+      "nonfat",
       "dry",
       "extra virgin",
+      "hickory flavored",
+      "extra firm",
       "reduced sodium",
-      "low sodium"
+      "room temperature",
+      "low sodium",
+      "sweetened",
+      "unsweetened",
+      "superfine",
+      "non dairy"
     ],
     "style": [
       "italian",
       "chinese",
-      "swiss"
+      "swiss",
+      "israeli",
+      "russian"
     ]
   },
   "preparation": {
@@ -190,6 +211,7 @@
       "chopped",
       "cubed",
       "peeled",
+      "pitted",
       "seeded",
       "cored",
       "crumbled",
@@ -205,21 +227,24 @@
       "diced",
       "mashed",
       "dried",
-      "sweetened",
+      "thawed",
       "unsalted",
       "julienned",
       "separated",
       "rinsed",
-      "peeled",
       "halved",
-      "rinsed",
       "drained",
+      "soaked",
+      "reserved",
       "beaten",
       "thawed",
       "rubbed",
       "seasoned",
       "divided",
-      "torn"
+      "torn",
+      "softened",
+      "grated",
+      "stemmed"
     ],
     "hard_prep": [
       "finely chopped",
