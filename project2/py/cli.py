@@ -6,6 +6,7 @@ TRANSFORM_CODE_MAP = {
     'meat': transform.from_vegetarian,
     'healthy': transform.to_healthy,
     'unhealthy': transform.from_healthy,
+    'chinese': transform.to_chinese
 }
 
 

@@ -62,3 +62,14 @@ python py/main.py {transform_code} < address
 - `meat` - from vegetarian
 - `healthy` - to healthy
 - `unhealthy` - from healthy
+- `chinese` - to chinese
+
+## TODO
+
+- collect data - Gabe
+- find primary cooking method - David
+- integrate ingredient descriptor + preparation - Gabe
+- get recipe title and output new recipe title - Jeff
+- account for two versions of allRecipe webpages
+- strip direction newlines
+- make quantities display in mixed numbers

@@ -45,39 +45,52 @@
     "dish",
     "saucepan"
   ],
+  "scalable": [
+    "salt",
+    "butter",
+    "lard",
+    "white sugar",
+    "brown sugar",
+    "sugar",
+    "soy sauce"
+  ],
+  "healthy_unhealthy_subs": [
+    ["margarine", "butter"],
+    ["brown rice", "white rice"],
+    ["whole wheat bread", "white bread"],
+    ["whole grain pasta", "pasta"],
+    ["whole grain spaghetti", "spaghetti"],
+    ["coconut cream", "heavy cream"]
+  ],
   "ingredients": {
     "protein": {
-      "meats": [
-        "beef",
-        "shrimp",
-        "pork",
-        "chicken breast",
-        "chicken thigh",
-        "bacon",
-        "steak",
-        "tuna"
-      ],
-      "vegetarian": [
-        "tofu",
-        "seitan"
-      ]
-    },    
-    "scalable": [
-      "salt",
-      "butter",
-      "lard",
-      "white sugar",
-      "brown sugar",
-      "sugar"
-    ],
-    "healthy_unhealthy_subs": [
-      ["margarine", "butter"],
-      ["brown rice", "white rice"],
-      ["whole wheat bread", "white bread"],
-      ["whole grain pasta", "pasta"],
-      ["whole grain spaghetti", "spaghetti"],
-      ["coconut cream", "heavy cream"]
-    ]
+      "beef": ["chinese"],
+      "shrimp": ["chinese"],
+      "pork": ["chinese"],
+      "chicken breast": ["chinese"],
+      "chicken thigh": ["chinese"],
+      "bacon": [],
+      "steak": [],
+      "tuna":[],
+      "tofu": ["chinese", "vegetarian"],
+      "seitan": ["vegetarian"]
+    },
+    "spices":{
+      "cumin":[],
+      "coriander":[],
+      "ginger": ["chinese"],
+      "garlic": ["chinese"],
+      "garlic powder": ["chinese"]
+    },
+    "sauces":{
+      "soy sauce": ["chinese"],
+      "teriyaki sauce": ["chinese"],
+      "alfredo sauce": []
+    },
+    "vegetables":{
+      "green onion": ["chinese"],
+      "yellow onion": []
+    }
   },
   "measurements": {
     "liquids": [
