@@ -11,8 +11,8 @@ class KnowledgeBase:
             json_data = json.load(f)
             self.meats = json_data['ingredients']['protein']['meats']
             self.vegge_proteins = json_data['ingredients']['protein']['vegetarian']
-            self.methods = json_data['methods']
             self.primary_methods = json_data['primary_methods']
+            self.secondary_methods = json_data['secondary_methods']
             self.tools = json_data['tools']
             self.liquid_measurements = json_data['measurements']['liquids']
             self.solid_measurements = json_data['measurements']['solids']

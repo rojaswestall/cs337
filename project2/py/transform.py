@@ -118,8 +118,8 @@ def substitute_ingredients(recipe, predicate, substituter):
     new_recipe = Recipe(
         new_ingredients,
         directions,
-        recipe.methods,
         recipe.primary_method,
+        recipe.secondary_methods,
         recipe.tools)
 
     return new_recipe

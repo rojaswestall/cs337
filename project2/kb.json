@@ -1,5 +1,5 @@
 {
-  "methods": [
+  "secondary_methods": [
     "preheat",
     "heat",
     "boil",
