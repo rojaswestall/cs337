@@ -37,3 +37,8 @@ def nested_map(function, lst):
 def unzip(lst):
     lst1, lst2 = zip(*lst)
     return lst1, lst2
+
+
+def list_difference(lst1, lst2):
+    set_diff = set(lst1) - set(lst2)
+    return list(set_diff)
