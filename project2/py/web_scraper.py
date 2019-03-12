@@ -21,7 +21,7 @@ def fetch_recipe(address, kb):
     directions = select_directions(soup)
     primary_method = get_primary_method(directions, kb.primary_methods)
     secondary_methods = parse(directions, kb.secondary_methods)
-    secondary_methods.remove(primary_method[0])
+    secondary_methods = [method for method in secondary_methods if method not in primary_method]
     tools = parse(directions, kb.tools)
 
     recipe_obj = Recipe(ingredient_objs, directions, primary_method, secondary_methods, tools)
@@ -76,6 +76,9 @@ def get_primary_method(directions, seconday_methods):
                     methods_dict[word] += direction.count(word)
                 else:
                     methods_dict[word] = 1
+
+    if methods_dict == {}:
+        return []
     sorted_methods = sorted(methods_dict.items(), key=operator.itemgetter(1))
     return [sorted_methods[0][0]]
 

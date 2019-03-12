@@ -150,13 +150,14 @@ def parse_ingredient(ing_string, kb):
     for_veggie = kb.veggie_descriptors
     for_seafood = kb.seafood_descriptors
     for_seasoning = kb.seasoning_descriptors
+    other = kb.other_descriptors
 
     ######## Is not used yet ########
     country_style = kb.style_descriptors
     # country_style = ['italian style', 'chinese style', 'swiss']
     #################################
 
-    all_descriptor = for_meat + for_veggie + for_seafood + for_seasoning
+    all_descriptor = for_meat + for_veggie + for_seafood + for_seasoning + country_style + other
 
     # Knowledge base: Preparation
     hard_prep = kb.hard_prep

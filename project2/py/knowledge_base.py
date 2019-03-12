@@ -10,8 +10,8 @@ class KnowledgeBase:
         with open(filepath) as f:
             json_data = json.load(f)
             self.tools = json_data['tools']
-            self.primary_methods = json_data['primary_methods']
-            self.secondary_methods = json_data['secondary_methods']
+            self.primary_methods = json_data['methods']['primary']
+            self.secondary_methods = json_data['methods']['secondary']
             self.liquid_measurements = json_data['measurements']['liquids']
             self.solid_measurements = json_data['measurements']['solids']
 
@@ -19,6 +19,7 @@ class KnowledgeBase:
             self.veggie_descriptors = json_data['descriptors']['veggie']
             self.seafood_descriptors = json_data['descriptors']['seafood']
             self.seasoning_descriptors = json_data['descriptors']['seasoning']
+            self.other_descriptors = json_data['descriptors']['other']
             self.style_descriptors = json_data['descriptors']['style']
 
             self.prep = json_data['preparation']['prep']
