@@ -215,6 +215,7 @@ def parse_ingredient(ing_string, kb):
                    'descriptor': descriptor,
                    'preparation': preparation}
 
+    quantity = '' if quantity is None else quantity
     quantity = str(quantity)
     quantities = quantity.split()
     fractions = utils.pmap(Fraction, quantities)
