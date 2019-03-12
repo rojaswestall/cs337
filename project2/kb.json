@@ -1,269 +1,314 @@
 {
-  "secondary_methods": [
-    "preheat",
-    "heat",
-    "stir",
-    "sprinkle",
-    "serve",
-    "cover",
-    "measure",
-    "whisk",
-    "soak",
-    "line",
-    "cream",
-    "beat",
-    "grease",
-    "shake",
-    "toss",
-    "refrigerate",
-    "dip",
-    "bake",
-    "turn",
-    "flip",
-    "strain",
-    "drain",
-    "boil",
-    "mix",
-    "simmer"
-  ],
-  "primary_methods": [
-   "bake",
-   "boil",
-   "mix",
-   "broil",
-   "fry",
-   "steam",
-   "grill"
- ],
-  "tools": [
-    "baking sheet",
-    "pan",
-    "skillet",
-    "pot",
-    "bag",
-    "cup",
-    "spatula",
-    "stove",
-    "wooden spoon",
-    "bag",
-    "bowl",
-    "whisk",
-    "oven",
-    "griddle",
-    "serving platter",
-    "dish",
-    "saucepan"
-  ],
-  "scalable": [
-    "salt",
-    "butter",
-    "lard",
-    "white sugar",
-    "brown sugar",
-    "sugar",
-    "soy sauce"
-  ],
+  "descriptors": {
+    "meat": [
+      "boneless",
+      "hot",
+      "instant",
+      "lean",
+      "lukewarm",
+      "raw",
+      "refrigerated",
+      "skinless",
+      "tender",
+      "warm"
+    ],
+    "seafood": [
+      "cooked",
+      "freshly",
+      "frozen"
+    ],
+    "seasoning": [
+      "active",
+      "all purpose",
+      "boiling",
+      "distilled",
+      "dry",
+      "extra firm",
+      "extra virgin",
+      "frying",
+      "ground",
+      "heavy",
+      "hickory flavored",
+      "low sodium",
+      "non dairy",
+      "nonfat",
+      "reduced sodium",
+      "room temperature",
+      "superfine",
+      "sweetened",
+      "unsweetened"
+    ],
+    "style": [
+      "chinese",
+      "israeli",
+      "italian",
+      "russian",
+      "swiss"
+    ],
+    "veggie": [
+      "condensed",
+      "fresh",
+      "large",
+      "organic",
+      "packed",
+      "ripe",
+      "very ripe"
+    ]
+  },
   "healthy_unhealthy_subs": [
-    ["margarine", "butter"],
-    ["brown rice", "white rice"],
-    ["whole wheat bread", "white bread"],
-    ["whole grain pasta", "pasta"],
-    ["whole grain spaghetti", "spaghetti"],
-    ["coconut cream", "heavy cream"]
+    [
+      "brown rice",
+      "white rice"
+    ],
+    [
+      "butter",
+      "margarine"
+    ],
+    [
+      "coconut cream",
+      "heavy cream"
+    ],
+    [
+      "pasta",
+      "whole grain pasta"
+    ],
+    [
+      "spaghetti",
+      "whole grain spaghetti"
+    ],
+    [
+      "white bread",
+      "whole wheat bread"
+    ]
   ],
   "ingredients": {
     "protein": {
-      "beef": ["chinese"],
-      "shrimp": ["chinese"],
-      "pork": ["chinese"],
-      "chicken breast": ["chinese"],
-      "chicken thigh": ["chinese"],
       "bacon": [],
+      "beef": [
+        "chinese"
+      ],
+      "chicken breast": [
+        "chinese"
+      ],
+      "chicken thigh": [
+        "chinese"
+      ],
+      "pork": [
+        "chinese"
+      ],
+      "seitan": [
+        "vegetarian"
+      ],
+      "shrimp": [
+        "chinese"
+      ],
       "steak": [],
-      "tuna":[],
-      "tofu": ["chinese", "vegetarian"],
-      "seitan": ["vegetarian"]
+      "tofu": [
+        "chinese",
+        "vegetarian"
+      ],
+      "tuna": []
     },
-    "spices":{
-      "cumin":[],
-      "coriander":[],
-      "ginger": ["chinese"],
-      "garlic": ["chinese"],
-      "garlic powder": ["chinese"]
+    "sauces": {
+      "alfredo sauce": [],
+      "soy sauce": [
+        "chinese"
+      ],
+      "teriyaki sauce": [
+        "chinese"
+      ]
     },
-    "sauces":{
-      "soy sauce": ["chinese"],
-      "teriyaki sauce": ["chinese"],
-      "alfredo sauce": []
+    "spices": {
+      "coriander": [],
+      "cumin": [],
+      "garlic": [
+        "chinese"
+      ],
+      "garlic powder": [
+        "chinese"
+      ],
+      "ginger": [
+        "chinese"
+      ]
     },
-    "vegetables":{
-      "green onion": ["chinese"],
+    "vegetables": {
+      "green onion": [
+        "chinese"
+      ],
       "yellow onion": []
     }
   },
   "measurements": {
     "liquids": [
-      "teaspoon",
-      "teaspoons",
-      "tablespoon",
-      "tablespoons",
+      "bottle",
+      "bottles",
+      "cup",
+      "cups",
       "dessertspoon",
       "dessertspoons",
       "gallen",
       "gallens",
       "quart",
       "quarts",
-      "bottle",
-      "bottles",
-      "cup",
-      "cups"
+      "tablespoon",
+      "tablespoons",
+      "teaspoon",
+      "teaspoons"
     ],
     "solids": [
-      "ounce",
-      "ounces",
-      "pound",
-      "pounds",
-      "slice",
-      "slices",
-      "inch",
-      "inches",
+      "bag",
       "bag",
       "bags",
-      "packet",
-      "packets",
-      "package",
-      "packages",
-      "clove",
-      "cloves",
-      "pinch",
-      "pinches",
-      "piece",
-      "pieces",
-      "can",
-      "cans",
-      "bag",
       "bags",
-      "head",
-      "heads",
       "bunch",
       "bunches",
+      "can",
+      "cans",
+      "clove",
+      "cloves",
+      "cube",
       "cube",
       "cubes",
-      "strip",
-      "strips",
-      "cube",
       "cubes",
       "envelope",
       "envelopes",
+      "head",
+      "heads",
+      "inch",
+      "inches",
+      "ounce",
+      "ounces",
+      "package",
+      "packages",
+      "packet",
+      "packets",
+      "piece",
+      "pieces",
+      "pinch",
+      "pinches",
+      "pound",
+      "pounds",
       "sheet",
-      "sheets"
-    ]
-  },
-  "descriptors": {
-    "meat": [
-      "raw",
-      "lean",
-      "tender",
-      "skinless",
-      "boneless",
-      "refrigerated",
-      "warm",
-      "lukewarm",
-      "hot",
-      "instant"
-    ],
-    "veggie": [
-      "packed",
-      "organic",
-      "fresh",
-      "large",
-      "condensed",
-      "ripe",
-      "very ripe"
-    ],
-    "seafood": [
-      "frozen",
-      "cooked",
-      "freshly"
-    ],
-    "seasoning": [
-      "ground",
-      "all purpose",
-      "boiling",
-      "frying",
-      "active",
-      "distilled",
-      "heavy",
-      "nonfat",
-      "dry",
-      "extra virgin",
-      "hickory flavored",
-      "extra firm",
-      "reduced sodium",
-      "room temperature",
-      "low sodium",
-      "sweetened",
-      "unsweetened",
-      "superfine",
-      "non dairy"
-    ],
-    "style": [
-      "italian",
-      "chinese",
-      "swiss",
-      "israeli",
-      "russian"
+      "sheets",
+      "slice",
+      "slices",
+      "strip",
+      "strips"
     ]
   },
   "preparation": {
+    "hard_prep": [
+      "casings removed",
+      "coarsely chopped",
+      "finely chopped",
+      "finely diced",
+      "matchstick cut",
+      "roughly chopped",
+      "separated florets",
+      "thinly sliced"
+    ],
     "prep": [
+      "beaten",
+      "blanched",
       "chopped",
-      "cubed",
-      "peeled",
-      "pitted",
-      "seeded",
       "cored",
       "crumbled",
-      "minced",
-      "shredded",
-      "melted",
-      "blanched",
-      "crushed",
-      "sliced",
-      "removed",
-      "cut",
       "crumbled",
+      "crushed",
+      "cubed",
+      "cut",
       "diced",
-      "mashed",
-      "dried",
-      "thawed",
-      "unsalted",
-      "julienned",
-      "separated",
-      "rinsed",
-      "halved",
+      "divided",
       "drained",
-      "soaked",
+      "dried",
+      "grated",
+      "halved",
+      "julienned",
+      "mashed",
+      "melted",
+      "minced",
+      "peeled",
+      "pitted",
+      "removed",
       "reserved",
-      "beaten",
-      "thawed",
+      "rinsed",
       "rubbed",
       "seasoned",
-      "divided",
-      "torn",
+      "seeded",
+      "separated",
+      "shredded",
+      "sliced",
+      "soaked",
       "softened",
-      "grated",
-      "stemmed"
-    ],
-    "hard_prep": [
-      "finely chopped",
-      "coarsely chopped",
-      "roughly chopped",
-      "thinly sliced",
-      "casings removed",
-      "finely diced",
-      "separated florets",
-      "matchstick cut"
+      "stemmed",
+      "thawed",
+      "thawed",
+      "torn",
+      "unsalted"
     ]
-  }
+  },
+  "primary_methods": [
+    "bake",
+    "boil",
+    "broil",
+    "fry",
+    "grill",
+    "mix",
+    "steam"
+  ],
+  "scalable": [
+    "brown sugar",
+    "butter",
+    "lard",
+    "salt",
+    "soy sauce",
+    "sugar",
+    "white sugar"
+  ],
+  "secondary_methods": [
+    "bake",
+    "beat",
+    "boil",
+    "cover",
+    "cream",
+    "dip",
+    "drain",
+    "flip",
+    "grease",
+    "heat",
+    "line",
+    "measure",
+    "mix",
+    "preheat",
+    "refrigerate",
+    "serve",
+    "shake",
+    "simmer",
+    "soak",
+    "sprinkle",
+    "stir",
+    "strain",
+    "toss",
+    "turn",
+    "whisk"
+  ],
+  "tools": [
+    "bag",
+    "bag",
+    "baking sheet",
+    "bowl",
+    "cup",
+    "dish",
+    "griddle",
+    "oven",
+    "pan",
+    "pot",
+    "saucepan",
+    "serving platter",
+    "skillet",
+    "spatula",
+    "stove",
+    "whisk",
+    "wooden spoon"
+  ]
 }
