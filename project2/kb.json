@@ -241,8 +241,24 @@
   ],
   "ingredients": {
     "protein": {
+      "anchovies": [],
       "bacon": [],
+      "bass": [],
       "beef": [
+        "chinese"
+      ],
+      "beef jerky": [],
+      "bison": [],
+      "black cod": [],
+      "blowfish": [
+        "chinese"
+      ],
+      "bluefish": [],
+      "buffalo": [],
+      "catfish": [
+        "chinese"
+      ],
+      "caviar": [
         "chinese"
       ],
       "chicken breast": [
@@ -251,21 +267,128 @@
       "chicken thigh": [
         "chinese"
       ],
+      "cod": [
+        "chinese"
+      ],
+      "crab": [
+        "chinese"
+      ],
+      "crayfish": [],
+      "cuttlefish": [
+        "chinese"
+      ],
+      "duck": [
+        "chinese"
+      ],
+      "eel": [
+        "chinese"
+      ],
+      "escargot": [],
+      "eye of round steak": [],
+      "flounder": [
+        "chinese"
+      ],
+      "haddock": [
+        "chinese"
+      ],
+      "halibut": [
+        "chinese"
+      ],
+      "ham": [],
+      "herring": [
+        "chinese"
+      ],
+      "hot dog": [],
+      "jellyfish": [
+        "chinese"
+      ],
+      "lamb": [
+        "chinese"
+      ],
+      "lamprey": [
+        "chinese"
+      ],
+      "lobster": [
+        "chinese"
+      ],
+      "masago": [],
+      "monkfish": [
+        "chinese"
+      ],
+      "mussels": [
+        "chinese"
+      ],
+      "octopus": [
+        "chinese"
+      ],
+      "oyster": [
+        "chinese"
+      ],
+      "pheasant": [
+        "chinese"
+      ],
+      "pike": [
+        "chinese"
+      ],
       "pork": [
+        "chinese"
+      ],
+      "pork tenderloin": [
+        "chinese"
+      ],
+      "quail": [
+        "chinese"
+      ],
+      "roast beef": [],
+      "salmon": [
+        "chinese"
+      ],
+      "scallops": [
+        "chinese"
+      ],
+      "sea cucumber": [
         "chinese"
       ],
       "seitan": [
         "vegetarian"
       ],
+      "shark": [
+        "chinese"
+      ],
+      "sheep's meat": [
+        "chinese"
+      ],
       "shrimp": [
         "chinese"
       ],
+      "snails": [
+        "chinese"
+      ],
       "steak": [],
+      "swordfish": [
+        "chinese"
+      ],
+      "tempeh": [
+        "chinese",
+        "vegetarian"
+      ],
+      "tilapia": [],
       "tofu": [
         "chinese",
         "vegetarian"
       ],
-      "tuna": []
+      "trout": [
+        "chinese"
+      ],
+      "tuna": [
+        "chinese"
+      ],
+      "turkey": [],
+      "turkey breast": [],
+      "veal": [
+        "chinese"
+      ],
+      "venison": []
     },
     "sauces": {
       "alfredo sauce": [],
