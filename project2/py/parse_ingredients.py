@@ -220,5 +220,5 @@ def parse_ingredient(ing_string, kb):
     fractions = utils.pmap(Fraction, quantities)
     quantity = sum(fractions)
 
-    ret = Ingredient(quantity, measurement, ingredient)
+    ret = Ingredient(quantity, measurement, ingredient, descriptor, preparation)
     return ret
