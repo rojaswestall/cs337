@@ -3,7 +3,7 @@ from fractions import Fraction
 
 class Ingredient:
     def __init__(self, quantity, measure, name):
-        self.quantity = quantity if quantity else Fraction(0)
+        self.quantity = Fraction(quantity) if quantity else Fraction(0)
         self.measure = measure if measure else ''
         self.name = name if name else ''
 
@@ -19,4 +19,12 @@ class Ingredient:
     def substitute_quantity(self, quantity):
         new_ingredient = Ingredient(
             quantity, self.measure, self.name)
+        return new_ingredient
+
+    def scale_quantity(self, factor):
+        """
+            scales quantity of ingredient by factor
+        """
+        new_quantity = self.quantity * Fraction(factor)
+        new_ingredient = self.substitute_quantity(new_quantity)
         return new_ingredient

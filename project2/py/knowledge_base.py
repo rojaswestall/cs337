@@ -1,7 +1,6 @@
 import json
 import utils
 import random
-from recipe import Recipe
 
 
 class KnowledgeBase:
@@ -87,18 +86,19 @@ class KnowledgeBase:
         return self._is_ingredient_type(
             ingredient, self.healthy_to_unhealthy.keys())
 
-    def _get_random_substitute(self, collection):
+    def _get_random_substitute(self, ingredient, collection):
         upper_bound = len(collection) - 1
         index = random.randint(0, upper_bound)
         chosen_sub = collection[index]
-        return chosen_sub
+        return ingredient.substitute_name(chosen_sub)
 
     def _get_determinate_substitute(self, ingredient, collection):
         if ingredient.name in collection:
-            return collection[ingredient.name]
+            sub = collection[ingredient.name]
+            return ingredient.substitute_name(sub)
 
         else:
-            return ingredient.name
+            return ingredient
 
     def get_healthy_substitute(self, ingredient):
         return self._get_determinate_substitute(
@@ -108,12 +108,12 @@ class KnowledgeBase:
         return self._get_determinate_substitute(
             ingredient, self.unhealthy_to_healthy)
 
-    def get_meat_substitute(self, _ingredient):
-        protein = self._get_random_substitute(self.vegge_proteins)
+    def get_meat_substitute(self, ingredient):
+        protein = self._get_random_substitute(ingredient, self.vegge_proteins)
         return protein
 
-    def get_meat(self, _ingredient):
-        meat = self._get_random_substitute(self.meats)
+    def get_meat(self, ingredient):
+        meat = self._get_random_substitute(ingredient, self.meats)
         return meat
 
     def _find_category(self, ingredient, cuisine_context):

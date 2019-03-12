@@ -9,6 +9,7 @@ from ingredient import Ingredient
 
 INGREDIENTS_SELECTOR = '[itemprop="recipeIngredient"]'
 DIRECTIONS_SELECTOR = '[itemprop="recipeInstructions"] span.recipe-directions__list--item'
+NAME_SELECTOR = '#recipe-main-content'
 
 
 def fetch_recipe(address, kb):
@@ -16,17 +17,31 @@ def fetch_recipe(address, kb):
     soup = BeautifulSoup(response, 'html.parser')
 
     ingredients = select_ingredients(soup)
-    ingredient_objs = parse_ingredients(ingredients, kb)
-
     directions = select_directions(soup)
+
     primary_method = get_primary_method(directions, kb.primary_methods)
     secondary_methods = parse(directions, kb.secondary_methods)
     secondary_methods = [method for method in secondary_methods if method not in primary_method]
     tools = parse(directions, kb.tools)
 
-    recipe_obj = Recipe(ingredient_objs, directions, primary_method, secondary_methods, tools)
+    name = select_recipe_name(soup)
+    ingredient_objs = parse_ingredients(ingredients, kb)
+    tools = parse(directions, kb.tools)
+
+    recipe_obj = Recipe(
+        name=name,
+        ingredients=ingredient_objs,
+        directions=directions,
+        primary_method=primary_method,
+        secondary_methods=secondary_methods,
+        tools=tools)
 
     return recipe_obj
+
+
+def select_recipe_name(soup):
+    name_node = soup.select_one(NAME_SELECTOR)
+    return name_node.text.strip()
 
 
 def select_ingredients(soup):
