@@ -214,30 +214,218 @@
     ]
   },
   "healthy_unhealthy_subs": [
-    [
-      "brown rice",
-      "white rice"
-    ],
-    [
-      "butter",
-      "margarine"
-    ],
-    [
-      "coconut cream",
-      "heavy cream"
-    ],
-    [
-      "pasta",
-      "whole grain pasta"
-    ],
-    [
-      "spaghetti",
-      "whole grain spaghetti"
-    ],
-    [
-      "white bread",
-      "whole wheat bread"
-    ]
+    {
+      "healthy": "almond butter",
+      "unhealthy": "peanut butter"
+    },
+    {
+      "healthy": "almond milk",
+      "unhealthy": "milk"
+    },
+    {
+      "healthy": "almonds",
+      "unhealthy": "croutons"
+    },
+    {
+      "healthy": "arrowroot powder",
+      "unhealthy": "corn starch"
+    },
+    {
+      "healthy": "avacado",
+      "unhealthy": "cheese"
+    },
+    {
+      "healthy": "bacon",
+      "unhealthy": "sausage"
+    },
+    {
+      "healthy": "bagels",
+      "unhealthy": "english muffins"
+    },
+    {
+      "healthy": "beef stock",
+      "unhealthy": "red wine"
+    },
+    {
+      "healthy": "cauliflower",
+      "unhealthy": "sweet potatoes"
+    },
+    {
+      "healthy": "chia seeds",
+      "unhealthy": "breadcrumbs"
+    },
+    {
+      "healthy": "chicken stock",
+      "unhealthy": "white wine"
+    },
+    {
+      "healthy": "cocoa nibs",
+      "unhealthy": "chocolate chips"
+    },
+    {
+      "healthy": "coconut cream",
+      "unhealthy": "heavy cream"
+    },
+    {
+      "healthy": "coconut flour",
+      "unhealthy": "flour"
+    },
+    {
+      "healthy": "coconut oil",
+      "unhealthy": "vegetable oil"
+    },
+    {
+      "healthy": "coconut sugar",
+      "unhealthy": "brown sugar"
+    },
+    {
+      "healthy": "coconut sugar",
+      "unhealthy": "white sugar"
+    },
+    {
+      "healthy": "corn tortilla",
+      "unhealthy": "flour tortilla"
+    },
+    {
+      "healthy": "croissant",
+      "unhealthy": "muffin"
+    },
+    {
+      "healthy": "egg whites",
+      "unhealthy": "eggs"
+    },
+    {
+      "healthy": "fruit-infused water",
+      "unhealthy": "fruit juice"
+    },
+    {
+      "healthy": "goat cheese",
+      "unhealthy": "low-fat cheese"
+    },
+    {
+      "healthy": "greek yogurt",
+      "unhealthy": "sour cream"
+    },
+    {
+      "healthy": "himalayan salt",
+      "unhealthy": "table salt"
+    },
+    {
+      "healthy": "honey",
+      "unhealthy": "corn syrup"
+    },
+    {
+      "healthy": "hummus",
+      "unhealthy": "mayo"
+    },
+    {
+      "healthy": "hummus",
+      "unhealthy": "mayonaise"
+    },
+    {
+      "healthy": "kale chips",
+      "unhealthy": "pretzels"
+    },
+    {
+      "healthy": "lettuce",
+      "unhealthy": "tortillas"
+    },
+    {
+      "healthy": "margarine",
+      "unhealthy": "butter"
+    },
+    {
+      "healthy": "mashed cauliflower",
+      "unhealthy": "mashed potatoes"
+    },
+    {
+      "healthy": "milk",
+      "unhealthy": "creamer"
+    },
+    {
+      "healthy": "mustard",
+      "unhealthy": "mayo"
+    },
+    {
+      "healthy": "mustard",
+      "unhealthy": "mayonaise"
+    },
+    {
+      "healthy": "nuts",
+      "unhealthy": "granola"
+    },
+    {
+      "healthy": "oatmeal",
+      "unhealthy": "cereal"
+    },
+    {
+      "healthy": "olive oil and vinegar",
+      "unhealthy": "ranch dressing"
+    },
+    {
+      "healthy": "palm shortening",
+      "unhealthy": "shortening"
+    },
+    {
+      "healthy": "peanut butter and nutella",
+      "unhealthy": "reeses"
+    },
+    {
+      "healthy": "popcorn",
+      "unhealthy": "potato chips"
+    },
+    {
+      "healthy": "quinoa",
+      "unhealthy": "white rice"
+    },
+    {
+      "healthy": "romaine",
+      "unhealthy": "iceberg"
+    },
+    {
+      "healthy": "smashed avacado",
+      "unhealthy": "jam"
+    },
+    {
+      "healthy": "smashed avacado",
+      "unhealthy": "jelly"
+    },
+    {
+      "healthy": "sprouted toast",
+      "unhealthy": "bagel"
+    },
+    {
+      "healthy": "stevia",
+      "unhealthy": "sugar"
+    },
+    {
+      "healthy": "tea",
+      "unhealthy": "soda"
+    },
+    {
+      "healthy": "tortilla",
+      "unhealthy": "pizza dough"
+    },
+    {
+      "healthy": "unrefined powdered sugar",
+      "unhealthy": "powdered sugar"
+    },
+    {
+      "healthy": "whole grain pasta",
+      "unhealthy": "pasta"
+    },
+    {
+      "healthy": "whole grain spaghetti",
+      "unhealthy": "spaghetti"
+    },
+    {
+      "healthy": "whole wheat bread",
+      "unhealthy": "white bread"
+    },
+    {
+      "healthy": "zucchini",
+      "unhealthy": "noodles"
+    }
   ],
   "ingredients": {
     "protein": {

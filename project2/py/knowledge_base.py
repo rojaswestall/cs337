@@ -33,11 +33,9 @@ class KnowledgeBase:
             self.scalable_ingredients = json_data['scalable']
             healthy_unhealthy_relations = json_data['healthy_unhealthy_subs']
             self.healthy_to_unhealthy = {
-                healthy: unhealthy for healthy,
-                unhealthy in healthy_unhealthy_relations}
+                pairs['healthy']: pairs['unhealthy'] for pairs in healthy_unhealthy_relations}
             self.unhealthy_to_healthy = {
-                unhealthy: healthy for healthy,
-                unhealthy in healthy_unhealthy_relations}
+                pairs['unhealthy']: pairs['healthy'] for pairs in healthy_unhealthy_relations}
 
             self.all_ingredients = json_data['ingredients']
             self.chinese_ingredients = {
