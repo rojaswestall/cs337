@@ -1,7 +1,7 @@
 import utils
 from recipe import Recipe
 from fractions import Fraction
-
+import nltk
 
 HEALTHY_TRANSFORMATION_FACTOR = 0.75
 UNHEALTHY_TRANSFORMATION_FACTOR = 1.5
@@ -99,7 +99,8 @@ def _change_quantities(recipe, predicate, factor):
         name=recipe.name,
         ingredients=new_ingredients,
         directions=recipe.directions,
-        methods=recipe.methods,
+        primary_method=recipe.primary_method,
+        secondary_methods=recipe.secondary_methods,
         tools=recipe.tools)
 
     return new_recipe
@@ -154,10 +155,20 @@ def _fix_direction(old_ingredient_name, new_ingredient_name, direction):
     """
         substitute old ingredient with new ingredient in direction
     """
-    new_direction = direction.replace(old_ingredient_name, new_ingredient_name)
+    sentences = nltk.sent_tokenize(direction)
+    sentences = [_fix_sentence(old_ingredient_name, new_ingredient_name, sent) for sent in sentences]
+    return ' '.join(sentences)
+
+def _fix_sentence(old_ingredient_name, new_ingredient_name, sentence):
+    if old_ingredient_name in sentence:
+        sentence = sentence.replace(old_ingredient_name, new_ingredient_name)
+        return sentence
 
     tokens = old_ingredient_name.split()
     for token in tokens:
-        new_direction = new_direction.replace(token, new_ingredient_name)
+        if token in sentence:
+            sentence = sentence.replace(token, new_ingredient_name)
+            return sentence
 
-    return new_direction
+    return sentence
+    

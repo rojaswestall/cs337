@@ -287,13 +287,177 @@
       ],
       "ginger": [
         "chinese"
+      ],
+      "ginger root": [
+        "chinese"
       ]
     },
     "vegetables": {
+      "amaranth": [
+        "chinese"
+      ],
+      "amaranth leaves": [
+        "chinese"
+      ],
+      "arrowroot": [],
+      "artichoke": [],
+      "arugula": [],
+      "asparagus": [
+        "chinese"
+      ],
+      "bamboo shoots": [
+        "chinese"
+      ],
+      "beets": [
+        "chinese"
+      ],
+      "belgian endive": [],
+      "bitter melon": [],
+      "bok choy": [
+        "chinese"
+      ],
+      "broccoli": [
+        "chinese"
+      ],
+      "broccoli rabe": [],
+      "brussel sprouts": [],
+      "butternut squash": [],
+      "carrot": [
+        "chinese"
+      ],
+      "cassava": [],
+      "cauliflower": [
+        "chinese"
+      ],
+      "celeriac": [],
+      "celery": [
+        "chinese"
+      ],
+      "celery root": [],
+      "chayote": [],
+      "chicory": [],
+      "collards": [],
+      "corn": [],
+      "crookneck": [],
+      "cucumber": [],
+      "curly endive": [],
+      "daikon": [],
+      "dandelion greens": [],
+      "edamame": [
+        "chinese"
+      ],
+      "eggplant": [
+        "chinese"
+      ],
+      "fava beans": [],
+      "fennel": [],
+      "fiddleheads": [],
+      "green beans": [
+        "chinese"
+      ],
+      "green cabbage": [
+        "chinese"
+      ],
       "green onion": [
         "chinese"
       ],
-      "yellow onion": []
+      "green peas": [],
+      "green pepper": [
+        "chinese"
+      ],
+      "horseradish": [],
+      "iceberg lettuce": [],
+      "jicama": [],
+      "kale": [],
+      "kohlrabi": [],
+      "leaf lettuce": [],
+      "leeks": [],
+      "mushrooms": [
+        "chinese"
+      ],
+      "mustard greens": [
+        "chinese"
+      ],
+      "napa cabbage": [
+        "chinese"
+      ],
+      "okra": [
+        "chinese"
+      ],
+      "onions": [
+        "chinese"
+      ],
+      "oysterplant": [],
+      "parsnip": [],
+      "pea leaves": [
+        "chinese"
+      ],
+      "pea shoots": [
+        "chinese"
+      ],
+      "peas": [
+        "chinese"
+      ],
+      "pumpkin": [],
+      "radicchio": [],
+      "radishes": [],
+      "red cabbage": [
+        "chinese"
+      ],
+      "red onion": [],
+      "red pepper": [
+        "chinese"
+      ],
+      "red potato": [
+        "chinese"
+      ],
+      "romaine lettuce": [],
+      "rutabaga": [],
+      "salsify": [],
+      "shallots": [],
+      "shepherds purse": [
+        "chinese"
+      ],
+      "snow peas": [
+        "chinese"
+      ],
+      "sorrel": [],
+      "soybeans": [
+        "chinese"
+      ],
+      "spaghetti squash": [],
+      "spinach": [
+        "chinese"
+      ],
+      "sugar snap peas": [],
+      "sweet potato": [
+        "chinese"
+      ],
+      "sweet red pepper": [],
+      "swiss chard": [],
+      "tomatillo": [],
+      "tomato": [
+        "chinese"
+      ],
+      "turnip": [],
+      "water spinach": [
+        "chinese"
+      ],
+      "watercress": [
+        "chinese"
+      ],
+      "white potato": [
+        "chinese"
+      ],
+      "yam root": [],
+      "yellow onion": [
+        "chinese"
+      ],
+      "yellow potato": [
+        "chinese"
+      ],
+      "yuca root": [],
+      "zucchini": []
     }
   },
   "measurements": {
