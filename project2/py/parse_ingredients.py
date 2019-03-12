@@ -157,7 +157,8 @@ def parse_ingredient(ing_string, kb):
     # country_style = ['italian style', 'chinese style', 'swiss']
     #################################
 
-    all_descriptor = for_meat + for_veggie + for_seafood + for_seasoning + country_style + other
+    all_descriptor = for_meat + for_veggie + \
+        for_seafood + for_seasoning + country_style + other
 
     # Knowledge base: Preparation
     hard_prep = kb.hard_prep
@@ -220,5 +221,10 @@ def parse_ingredient(ing_string, kb):
     fractions = utils.pmap(Fraction, quantities)
     quantity = sum(fractions)
 
-    ret = Ingredient(quantity, measurement, ingredient, descriptor, preparation)
+    ret = Ingredient(
+        quantity,
+        measurement,
+        ingredient,
+        descriptor,
+        preparation)
     return ret

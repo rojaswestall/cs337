@@ -1,12 +1,13 @@
 import utils
 
+
 class Recipe:
     def __init__(
             self,
             name='Name Placeholder',
             ingredients=[],
             directions=[],
-            primary_method=[], 
+            primary_method=[],
             secondary_methods=[],
             tools=[]):
         self.name = name
@@ -20,8 +21,10 @@ class Recipe:
         s = self._format_title(self.name)
         s += self._format_section('Ingredients', self.ingredients)
         s += self._format_section('Directions', self.directions)
-        s += self._format_section('Primary Cooking Method', self.primary_method)
-        s += self._format_section('Other Required Methods', self.secondary_methods)
+        s += self._format_section('Primary Cooking Method',
+                                  self.primary_method)
+        s += self._format_section('Other Required Methods',
+                                  self.secondary_methods)
         s += self._format_section('Tools', self.tools)
         return s
 

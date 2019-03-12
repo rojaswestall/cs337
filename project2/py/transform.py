@@ -68,6 +68,7 @@ def _base_transformer(recipe, predicate, substituter, new_name):
 
     return new_recipe
 
+
 def to_chinese(recipe, kb):
     new_recipe = _base_transformer(
         recipe=recipe,
@@ -156,8 +157,13 @@ def _fix_direction(old_ingredient_name, new_ingredient_name, direction):
         substitute old ingredient with new ingredient in direction
     """
     sentences = nltk.sent_tokenize(direction)
-    sentences = [_fix_sentence(old_ingredient_name, new_ingredient_name, sent) for sent in sentences]
+    sentences = [
+        _fix_sentence(
+            old_ingredient_name,
+            new_ingredient_name,
+            sent) for sent in sentences]
     return ' '.join(sentences)
+
 
 def _fix_sentence(old_ingredient_name, new_ingredient_name, sentence):
     if old_ingredient_name in sentence:
@@ -171,4 +177,3 @@ def _fix_sentence(old_ingredient_name, new_ingredient_name, sentence):
             return sentence
 
     return sentence
-    

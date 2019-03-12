@@ -21,7 +21,8 @@ def fetch_recipe(address, kb):
 
     primary_method = get_primary_method(directions, kb.primary_methods)
     secondary_methods = parse(directions, kb.secondary_methods)
-    secondary_methods = [method for method in secondary_methods if method not in primary_method]
+    secondary_methods = [
+        method for method in secondary_methods if method not in primary_method]
     tools = parse(directions, kb.tools)
 
     name = select_recipe_name(soup)
@@ -80,8 +81,10 @@ def extract(direction, collection):
             lst.append(word)
     return lst
 
+
 def get_primary_method(directions, seconday_methods):
-    # Go through all directions & return whichever primary cooking method is mentioned most frequently.
+    # Go through all directions & return whichever primary cooking method is
+    # mentioned most frequently.
     methods_dict = {}
     for direction in directions:
         direction = direction.lower().replace('.', '').split()

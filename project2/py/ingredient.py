@@ -10,11 +10,11 @@ class Ingredient:
         self.preparation = preparation if preparation else ''
 
     def __str__(self):
-        s = [self.name,
-        'Quantity: ' + str(self.quantity), 
-        'Measurement: ' + self.measure if self.measure is not '' else '', 
-        'Preparation: ' + self.preparation if self.preparation is not '' else '', 
-        'Descriptor: ' + self.descriptor if self.descriptor is not '' else '']
+        s = [self.name, 'Quantity: ' +
+             str(self.quantity), 'Measurement: ' +
+             self.measure if self.measure is not '' else '', 'Preparation: ' +
+             self.preparation if self.preparation is not '' else '', 'Descriptor: ' +
+             self.descriptor if self.descriptor is not '' else '']
         s = '\n  - '.join(filter(lambda x: x != '', s))
         return s
 
@@ -25,7 +25,11 @@ class Ingredient:
 
     def substitute_quantity(self, quantity):
         new_ingredient = Ingredient(
-            quantity, self.measure, self.name, self.descriptor, self.preparation)
+            quantity,
+            self.measure,
+            self.name,
+            self.descriptor,
+            self.preparation)
         return new_ingredient
 
     def scale_quantity(self, factor):
