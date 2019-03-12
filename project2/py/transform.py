@@ -69,10 +69,11 @@ def _base_transformer(recipe, predicate, substituter, new_name):
     return new_recipe
 
 def to_chinese(recipe, kb):
-    substituter = _make_name_substituter(kb.get_chinese_equivalent)
-
-    new_recipe = _substitute_ingredients(
-        recipe, kb.is_not_chinese_ingredient, substituter)
+    new_recipe = _base_transformer(
+        recipe=recipe,
+        predicate=kb.is_not_chinese_ingredient,
+        substituter=kb.get_chinese_equivalent,
+        new_name='Chinese')
 
     return new_recipe
 

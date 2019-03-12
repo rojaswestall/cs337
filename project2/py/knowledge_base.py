@@ -138,7 +138,7 @@ class KnowledgeBase:
         category = self._find_category(ingredient, self.all_ingredients)
 
         if not category:
-            return ingredient.name
+            return ingredient
 
         sub = self._get_random_substitute(self.chinese_ingredients[category])
 
