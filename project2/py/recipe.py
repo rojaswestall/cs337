@@ -1,6 +1,5 @@
 import utils
 
-
 class Recipe:
     def __init__(
             self,
@@ -28,7 +27,6 @@ class Recipe:
 
     def _format_section(self, title, lst):
         lst = utils.pmap(str, lst)
-        lst = utils.pmap(lambda s: s.capitalize(), lst)
         s = '## ' + title + '\n\n- ' + '\n- '.join(lst) + '\n\n'
         return s
 
