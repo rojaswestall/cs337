@@ -9,7 +9,7 @@ UNHEALTHY_TRANSFORMATION_FACTOR = 1.5
 
 def to_vegetarian(recipe, kb):
     new_recipe = _base_transformer(
-        recipe=new_recipe,
+        recipe=recipe,
         predicate=kb.is_meat,
         substituter=kb.get_meat_substitute,
         new_name='Vegetarian')
