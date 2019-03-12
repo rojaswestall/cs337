@@ -22,7 +22,32 @@ pipenv shell
 
 Now you should be good to go.
 
-## Using `pipenv`
+## Using the Program
+
+`py/main.py` takes an AllRecipes url from standard input and prints a transformed recipe to standard ouput. Eg:
+
+```sh
+python py/main.py {transform_code} < address.txt
+```
+
+Change the url by modyfing `address.txt`.
+
+To point the output to a markdown file instead of printing to the command line:
+
+```sh
+python py/main.py {transform_code} < address.txt > results.md
+```
+
+### Transform Codes
+
+- `veg` - to vegetarian
+- `meat` - from vegetarian
+- `healthy` - to healthy
+- `unhealthy` - from healthy
+- `chinese` - to chinese
+
+
+## Developing with `pipenv`
 
 Adding dependencies:
 
@@ -47,29 +72,3 @@ Lint Python files:
 ```sh
 pipenv run lint
 ```
-
-## Using the Program
-
-`py/main.py` takes an AllRecipes url from standard input and prints a transformed recipe to standard ouput. Eg:
-
-```sh
-python py/main.py {transform_code} < address
-```
-
-### Transform Codes
-
-- `veg` - to vegetarian
-- `meat` - from vegetarian
-- `healthy` - to healthy
-- `unhealthy` - from healthy
-- `chinese` - to chinese
-
-## TODO
-
-- collect data - Gabe
-- find primary cooking method - David
-- integrate ingredient descriptor + preparation - Gabe
-- get recipe title and output new recipe title - Jeff
-- account for two versions of allRecipe webpages
-- strip direction newlines
-- make quantities display in mixed numbers
