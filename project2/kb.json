@@ -964,18 +964,115 @@
       "zigeuner sauce": []
     },
     "spices": {
-      "coriander": [],
+      "adobo": [],
+      "allspice": [],
+      "anise extract": ["chinese"],
+      "anise seed": ["chinese"],
+      "basil": ["chinese"],
+      "bay leaf": [
+        "chinese"
+      ],
+      "black pepper": ["chinese"],
+      "black peppercorns": ["chinese"],
+      "black salt": [],
+      "black truffle salt": [],
+      "brown sugar": ["chinese"],
+      "cajun seasoning": [],
+      "calabrian chili peppers": [],
+      "cane sugar": [],
+      "caraway seeds": [],
+      "caraway, ground": [],
+      "cardamom": [
+        "chinese"
+      ],
+      "cardamom seeds": [],
+      "cayenne pepper": [],
+      "chili": ["chinese"],
+      "chive": [],
+      "cilantro": ["chinese"],
+      "cloves": [
+        "chinese"
+      ],
+      "cocoa nibs": [],
+      "coriander": ["chinese"],
       "cumin": [],
+      "cumin seeds": [],
+      "dill": [],
+      "dill seed": [],
+      "dried chili": [
+        "chinese"
+      ],
+      "fennel": [
+        "chinese"
+      ],
+      "fennel seeds": ["chinese"],
+      "garam masala": [],
       "garlic": [
         "chinese"
       ],
       "garlic powder": [
         "chinese"
       ],
+      "ghost chili pepper": [],
+      "ghost pepper": [],
       "ginger": [
         "chinese"
       ],
       "ginger root": [
+        "chinese"
+      ],
+      "grapefruit": [],
+      "green mango": [],
+      "green peppercorns": ["chinese"],
+      "green serrano chile": [],
+      "guajillo chile": [],
+      "guajillo chiles": [],
+      "habanero": [],
+      "habanero pepper": [],
+      "honey": ["chinese"],
+      "horseradish": [],
+      "hot chili": ["chinese"],
+      "italian herb seasoning": [],
+      "jamaican jerk seasoning": [],
+      "juniper berries": ["chinese"],
+      "lemon juice": [],
+      "lemon peel": [],
+      "lemon pepper": [],
+      "lemongrass": ["chinese"],
+      "lime juice": [],
+      "lime peel": [],
+      "maple sugar": [],
+      "molasses": [],
+      "mustard": [],
+      "mustard seeds": [],
+      "nutmeg": ["chinese"],
+      "orange peel": ["chinese"],
+      "oregano": ["chinese"],
+      "paprika": ["chinese"],
+      "parsley": [],
+      "parsley flakes": [],
+      "peppermint": ["chinese"],
+      "rosemary": ["chinese"],
+      "saffron": ["chinese"],
+      "sage": [],
+      "salt": ["chinese"],
+      "sassafras": [],
+      "sea salt": ["chinese"],
+      "sesame seeds": ["chinese"],
+      "shallots": ["chinese"],
+      "star anise": [
+        "chinese"
+      ],
+      "szechuan peppercorns": [
+        "chinese"
+      ],
+      "tamarind": ["chinese"],
+      "tandoori": [],
+      "tarragon": ["chinese"],
+      "thyme": ["chinese"],
+      "turmeric": ["chinese"],
+      "vanilla extract": ["chinese"],
+      "white pepper": [
         "chinese"
       ]
     },
@@ -1052,7 +1149,7 @@
       "green pepper": [
         "chinese"
       ],
-      "horseradish": [],
+      "horseradish": ["chinese"],
       "iceberg lettuce": [],
       "jicama": [],
       "kale": [],
