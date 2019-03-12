@@ -3,7 +3,7 @@ import urllib.request as url
 from bs4 import BeautifulSoup
 from recipe import Recipe
 from parse_ingredients import parse_ingredients
-
+import operator
 import utils
 from ingredient import Ingredient
 
@@ -19,10 +19,12 @@ def fetch_recipe(address, kb):
     ingredient_objs = parse_ingredients(ingredients, kb)
 
     directions = select_directions(soup)
-    methods = parse(directions, kb.methods)
+    primary_method = get_primary_method(directions, kb.primary_methods)
+    secondary_methods = parse(directions, kb.secondary_methods)
+    secondary_methods.remove(primary_method[0])
     tools = parse(directions, kb.tools)
 
-    recipe_obj = Recipe(ingredient_objs, directions, methods, tools)
+    recipe_obj = Recipe(ingredient_objs, directions, primary_method, secondary_methods, tools)
 
     return recipe_obj
 
@@ -62,6 +64,20 @@ def extract(direction, collection):
         if word in direction:
             lst.append(word)
     return lst
+
+def get_primary_method(directions, seconday_methods):
+    # Go through all directions & return whichever primary cooking method is mentioned most frequently.
+    methods_dict = {}
+    for direction in directions:
+        direction = direction.lower().replace('.', '').split()
+        for word in seconday_methods:
+            if word in direction:
+                if word in methods_dict:
+                    methods_dict[word] += direction.count(word)
+                else:
+                    methods_dict[word] = 1
+    sorted_methods = sorted(methods_dict.items(), key=operator.itemgetter(1))
+    return [sorted_methods[0][0]]
 
 
 if __name__ == '__main__':
